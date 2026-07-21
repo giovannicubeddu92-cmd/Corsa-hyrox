@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Corsa · Hyrox</title>
+<meta name="theme-color" content="#15130f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Corsa Hyrox">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+  :root{
+    --bg:#f5f6f4; --surface:#ffffff; --ink:#15130f; --muted:#6b7280; --line:#e6e8e6;
+    --brand:#c8e600; --brand-ink:#1a2200;
+    --easy:#37618e; --long:#243b5c; --test:#b9d400; --vac:#6d5a8c;
+    --done:#16a34a; --skip:#dc2626;
+    --safe-t:env(safe-area-inset-top); --safe-b:env(safe-area-inset-bottom);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  html,body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+  body{padding:0 0 calc(16px + var(--safe-b)); max-width:680px; margin:0 auto;}
+  .num{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
+
+  header{position:sticky; top:0; z-index:5; background:var(--ink); color:#fff;
+    padding:calc(12px + var(--safe-t)) 16px 12px; }
+  .brandrow{display:flex; align-items:baseline; gap:10px}
+  .brandrow h1{margin:0; font-size:20px; font-weight:800; letter-spacing:.06em; text-transform:uppercase}
+  .brandrow .accent{width:10px; height:10px; border-radius:2px; background:var(--brand); align-self:center}
+  header .sub{margin:2px 0 0; font-size:11.5px; color:#b9bcb4; letter-spacing:.02em}
+
+  .toolbar{display:flex; align-items:center; gap:8px; padding:10px 12px 4px}
+  .seg{display:flex; background:#e9ebe8; border-radius:999px; padding:3px}
+  .seg button{border:0; background:transparent; color:var(--muted); font-weight:700; font-size:13px;
+    padding:7px 14px; border-radius:999px}
+  .seg button.on{background:var(--ink); color:#fff}
+  .spacer{flex:1}
+  .nav{display:flex; align-items:center; gap:2px}
+  .iconbtn{border:1px solid var(--line); background:var(--surface); border-radius:10px; width:38px; height:38px;
+    font-size:18px; color:var(--ink); display:grid; place-items:center}
+  .today-btn{border:1px solid var(--line); background:var(--surface); border-radius:10px; height:38px; padding:0 12px;
+    font-weight:700; font-size:13px}
+  .period{padding:2px 14px 8px; font-size:15px; font-weight:800; letter-spacing:.02em; text-transform:capitalize}
+
+  /* MONTH */
+  .dow{display:grid; grid-template-columns:repeat(7,1fr); padding:0 8px; gap:6px}
+  .dow span{text-align:center; font-size:11px; font-weight:700; color:var(--muted); padding-bottom:4px}
+  .month{display:grid; grid-template-columns:repeat(7,1fr); gap:6px; padding:0 8px}
+  .cell{min-height:74px; background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:5px 5px 6px; display:flex; flex-direction:column; gap:4px; overflow:hidden}
+  .cell.out{background:#f0f1ef; border-color:#eef0ed}
+  .cell.out .dn{color:#c2c6c0}
+  .dn{font-size:12px; font-weight:700; color:var(--muted); line-height:1; align-self:flex-start;
+    width:22px; height:22px; display:grid; place-items:center; border-radius:999px}
+  .cell.today .dn{background:var(--brand); color:var(--brand-ink)}
+  .cell.today{border-color:#c9d200; box-shadow:0 0 0 1.5px #dbe86a inset}
+
+  /* WEEK (vertical) */
+  .week{display:flex; flex-direction:column; gap:8px; padding:2px 12px}
+  .wrow{display:grid; grid-template-columns:64px 1fr; gap:10px; background:var(--surface);
+    border:1px solid var(--line); border-radius:14px; padding:10px; min-height:64px}
+  .wrow.today{border-color:#c9d200; box-shadow:0 0 0 1.5px #dbe86a inset}
+  .wdate{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px}
+  .wdate .wd{font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.04em}
+  .wdate .dd{font-size:22px; font-weight:800}
+  .wrow.today .dd{color:#5a6a00}
+  .wlist{display:flex; flex-direction:column; gap:6px; justify-content:center}
+  .wempty{color:#b8bcb4; font-size:13px; align-self:center; justify-self:start; padding-left:2px}
+
+  /* CHIPS */
+  .chip{position:relative; border-radius:9px; padding:5px 8px; color:#fff; cursor:pointer;
+    -webkit-user-select:none; user-select:none; -webkit-touch-callout:none;
+    font-size:11.5px; font-weight:700; line-height:1.15; touch-action:auto;
+    box-shadow:0 1px 0 rgba(0,0,0,.06)}
+  .chip .tag{display:block; font-size:9px; font-weight:800; letter-spacing:.08em; opacity:.85; text-transform:uppercase}
+  .chip.kind-easy{background:var(--easy)}
+  .chip.kind-long{background:var(--long)}
+  .chip.kind-vac{background:var(--vac)}
+  .chip.kind-test{background:var(--test); color:var(--brand-ink)}
+  .chip.done{background:var(--done); color:#fff}
+  .chip.skip{background:var(--skip); color:#fff}
+  .chip .mk{position:absolute; top:-6px; right:-4px; width:18px; height:18px; border-radius:999px;
+    display:grid; place-items:center; font-size:11px; background:#fff; color:var(--ink);
+    box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .chip.done .mk{background:#fff; color:var(--done)}
+  .chip.skip .mk{background:#fff; color:var(--skip)}
+  .week .chip{font-size:13px; padding:8px 10px}
+  .week .chip .tag{font-size:10px}
+
+  .dragging{touch-action:none; user-select:none}
+  .drop-target{outline:2px dashed var(--brand) !important; outline-offset:-2px; background:#fbffd6 !important}
+  #ghost{position:fixed; z-index:50; pointer-events:none; transform:translate(-50%,-50%) scale(1.04);
+    opacity:.95; box-shadow:0 8px 22px rgba(0,0,0,.28); max-width:150px}
+
+  /* LEGEND */
+  .legend{display:flex; flex-wrap:wrap; gap:12px; padding:14px 16px 4px; color:var(--muted); font-size:11.5px}
+  .legend span{display:inline-flex; align-items:center; gap:6px}
+  .dot{width:12px; height:12px; border-radius:4px; display:inline-block}
+  .note{padding:6px 16px 0; color:#9aa09a; font-size:11px}
+
+  /* MODAL */
+  .backdrop{position:fixed; inset:0; background:rgba(20,19,15,.42); display:none; z-index:60;
+    align-items:flex-end; justify-content:center}
+  .backdrop.on{display:flex}
+  .sheet{background:var(--surface); width:100%; max-width:680px; border-radius:20px 20px 0 0;
+    padding:14px 16px calc(18px + var(--safe-b)); box-shadow:0 -8px 30px rgba(0,0,0,.2)}
+  .sheet .grab{width:40px; height:4px; border-radius:999px; background:#d9dbd6; margin:2px auto 12px}
+  .sheet .mtag{display:inline-block; font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+    color:#fff; padding:3px 8px; border-radius:999px}
+  .sheet h2{margin:8px 0 2px; font-size:19px; font-weight:800}
+  .sheet .mdate{color:var(--muted); font-size:13px; font-weight:600; text-transform:capitalize; margin-bottom:10px}
+  .sheet .detail{font-size:14px; line-height:1.5; color:#2b2b28; background:#f6f7f5; border-radius:12px; padding:12px}
+  .statusrow{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px}
+  .statusrow button{border:1px solid var(--line); background:var(--surface); border-radius:12px; padding:11px 0;
+    font-weight:700; font-size:14px}
+  .statusrow button.done{border-color:var(--done); color:var(--done)}
+  .statusrow button.done.active{background:var(--done); color:#fff}
+  .statusrow button.skip{border-color:var(--skip); color:var(--skip)}
+  .statusrow button.skip.active{background:var(--skip); color:#fff}
+  .statusrow button.clear{color:var(--muted)}
+  .moverow{display:flex; align-items:center; gap:8px; margin-top:12px; font-size:13px; color:var(--muted)}
+  .moverow input{flex:1; border:1px solid var(--line); border-radius:10px; padding:9px; font-size:14px;
+    font-family:inherit; color:var(--ink); background:var(--surface)}
+  .close{width:100%; margin-top:12px; border:0; background:var(--ink); color:#fff; border-radius:12px;
+    padding:12px; font-weight:800; font-size:15px}
+</style>
+</head>
+<body>
+<header>
+  <div class="brandrow"><span class="accent"></span><h1>Corsa · Hyrox</h1></div>
+  <p class="sub">Hyrox Double · obiettivo sub 1h10 · 5–6 dic 2026</p>
+</header>
+
+<div class="toolbar">
+  <div class="seg">
+    <button id="segMonth" class="on">Mese</button>
+    <button id="segWeek">Settimana</button>
+  </div>
+  <div class="spacer"></div>
+  <div class="nav">
+    <button class="iconbtn" id="prev" aria-label="Precedente">‹</button>
+    <button class="today-btn" id="today">Oggi</button>
+    <button class="iconbtn" id="next" aria-label="Successivo">›</button>
+  </div>
+</div>
+<div class="period num" id="period"></div>
+
+<div id="cal"></div>
+
+<div class="legend">
+  <span><i class="dot" style="background:var(--easy)"></i>Da fare</span>
+  <span><i class="dot" style="background:var(--done)"></i>Fatto</span>
+  <span><i class="dot" style="background:var(--skip)"></i>Saltato</span>
+  <span><i class="dot" style="background:var(--brand)"></i>Oggi</span>
+</div>
+<p class="note">Tocca un allenamento per i dettagli · tienilo premuto e trascinalo per spostarlo · solo corse, aggiornato fino al 30 ago (S7).</p>
+
+<div class="backdrop" id="backdrop">
+  <div class="sheet" id="sheet">
+    <div class="grab"></div>
+    <span class="mtag" id="mTag"></span>
+    <h2 id="mTitle"></h2>
+    <div class="mdate num" id="mDate"></div>
+    <div class="detail" id="mDetail"></div>
+    <div class="statusrow">
+      <button class="done" id="btnDone">Fatto</button>
+      <button class="skip" id="btnSkip">Saltato</button>
+      <button class="clear" id="btnClear">Azzera</button>
+    </div>
+    <div class="moverow">
+      <label for="moveDate">Sposta al giorno</label>
+      <input type="date" id="moveDate" class="num">
+    </div>
+    <button class="close" id="btnClose">Chiudi</button>
+  </div>
+</div>
+
+<div id="ghostHolder"></div>
+
+<script>
+/* ---------- Dati programma (solo corse, S1–S7: 16 lug → 30 ago 2026) ---------- */
+const DEFAULT_WORKOUTS = [
+  {id:'s1-test', date:'2026-07-16', kind:'test', tag:'Test', title:'Test 3 km', short:'Test 3 km',
+   detail:"Riscaldamento 15' + 4 allunghi. Poi 3 km a ritmo duro e costante (non partire a tutta). Defaticamento 10'. Annota tempo, passo, FC media e max."},
+  {id:'s1-sun', date:'2026-07-19', kind:'easy', tag:'Facile', title:"Corsa facile 50–55'", short:"Facile 50–55'",
+   detail:"Facile, FC ≤150. Rodaggio e recupero dopo il test: ritmo lento, devi poter parlare. Non è un lungo tirato."},
+
+  {id:'s2-wed', date:'2026-07-22', kind:'easy', tag:'Facile', title:"Facile 40' + allunghi", short:"Facile 40' +all.",
+   detail:"40' facili a FC ≤150. A fine corsa 6×15–20\" di allunghi rilassati (non sprint), recupero camminando. Punta la cadenza verso 170."},
+  {id:'s2-sun', date:'2026-07-26', kind:'long', tag:'Lungo', title:"Lungo 60'", short:"Lungo 60'",
+   detail:"Tutto facile, FC ≤150. Se le gambe sono pesanti dal venerdì, rallenta: non forzare."},
+
+  {id:'s3-wed', date:'2026-07-29', kind:'easy', tag:'Facile', title:"Facile 45' + allunghi", short:"Facile 45' +all.",
+   detail:"45' facili a FC ≤150 + 6×15–20\" di allunghi a fine corsa. Cadenza verso 170."},
+  {id:'s3-sun', date:'2026-08-02', kind:'long', tag:'Lungo', title:"Lungo 70'", short:"Lungo 70'",
+   detail:"Tutto facile, FC ≤150. Picco del lungo prima delle ferie."},
+
+  {id:'s4-wed', date:'2026-08-05', kind:'easy', tag:'Facile', title:"Facile 40' + allunghi", short:"Facile 40' +all.",
+   detail:"40' facili a FC ≤150 + allunghi."},
+  {id:'s4-sun', date:'2026-08-09', kind:'long', tag:'Lungo', title:"Lungo 65'", short:"Lungo 65'",
+   detail:"Tutto facile, FC ≤150."},
+
+  {id:'s5-1', date:'2026-08-11', kind:'vac', tag:'Ferie', title:"Facile ferie 30–50'", short:"Ferie 30–50'",
+   detail:"Ferie (Sardegna): facile a FC ≤150, con qualche allungo. 2–3 corse a settimana, spostabili a piacere. Zero obiettivi di ritmo — si tiene solo acceso il motore."},
+  {id:'s5-2', date:'2026-08-13', kind:'vac', tag:'Ferie', title:"Facile ferie 30–50'", short:"Ferie 30–50'",
+   detail:"Ferie: facile a FC ≤150. Spostabile. Se salti, nessun dramma: è fase di scarico."},
+  {id:'s5-3', date:'2026-08-15', kind:'vac', tag:'Ferie', title:"Facile ferie 30–50'", short:"Ferie 30–50'",
+   detail:"Ferie: facile a FC ≤150. Corri all'alba per il caldo."},
+
+  {id:'s6-1', date:'2026-08-18', kind:'vac', tag:'Ferie', title:"Facile ferie 30–50'", short:"Ferie 30–50'",
+   detail:"Ferie: facile a FC ≤150, con qualche allungo. Spostabile."},
+  {id:'s6-2', date:'2026-08-20', kind:'vac', tag:'Ferie', title:"Facile ferie 30–50'", short:"Ferie 30–50'",
+   detail:"Ferie: facile a FC ≤150. Spostabile."},
+  {id:'s6-3', date:'2026-08-22', kind:'vac', tag:'Ferie', title:"Facile ferie 30–50'", short:"Ferie 30–50'",
+   detail:"Ferie: facile a FC ≤150. Ultima settimana di scarico prima del rientro."},
+
+  {id:'s7-wed', date:'2026-08-26', kind:'easy', tag:'Facile', title:"Facile 45' + allunghi", short:"Facile 45' +all.",
+   detail:"Rientro dalle ferie. 45' facili a FC ≤150 + allunghi. Cadenza verso 170."},
+  {id:'s7-sun', date:'2026-08-30', kind:'long', tag:'Lungo', title:"Lungo 70–75'", short:"Lungo 70–75'",
+   detail:"Tutto facile, FC ≤150. Ultimo lungo della fase base: da S8 (31 ago) si aggiunge la qualità (soglia/ripetute)."},
+];
+
+/* ---------- Persistenza ---------- */
+const OV_KEY='hxrun.overrides.v1', VIEW_KEY='hxrun.view.v1';
+function loadOv(){ try{return JSON.parse(localStorage.getItem(OV_KEY))||{};}catch(e){return {};} }
+function saveOv(o){ try{localStorage.setItem(OV_KEY, JSON.stringify(o));}catch(e){} }
+let overrides = loadOv();
+
+function workouts(){
+  return DEFAULT_WORKOUTS.map(w=>{
+    const o=overrides[w.id]||{};
+    return {...w, date:o.date||w.date, status:o.status||null};
+  });
+}
+function setStatus(id,status){
+  overrides[id]=overrides[id]||{};
+  if(status) overrides[id].status=status; else delete overrides[id].status;
+  saveOv(overrides); render(); if(currentId===id) fillSheet(id);
+}
+function setDate(id,ymd){
+  overrides[id]=overrides[id]||{}; overrides[id].date=ymd;
+  saveOv(overrides); render(); if(currentId===id) fillSheet(id);
+}
+
+/* ---------- Date helpers ---------- */
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+function parseYMD(s){const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c);}
+function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x;}
+function mondayOf(d){const x=new Date(d);const off=(x.getDay()+6)%7;return addDays(x,-off);}
+const fmtPeriodMonth=new Intl.DateTimeFormat('it-IT',{month:'long',year:'numeric'});
+const fmtDay=new Intl.DateTimeFormat('it-IT',{day:'numeric',month:'short'});
+const fmtFull=new Intl.DateTimeFormat('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+const DOW=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
+const todayYMD=ymd(new Date());
+
+/* ---------- Stato vista ---------- */
+let view = localStorage.getItem(VIEW_KEY)||'month';
+let cursor = new Date();
+
+/* ---------- Render ---------- */
+const cal=document.getElementById('cal');
+function byDate(){ const m={}; workouts().forEach(w=>{(m[w.date]=m[w.date]||[]).push(w);}); return m; }
+
+function chipHTML(w){
+  const st=w.status?(' '+w.status):'';
+  const mk = w.status==='done'?'✓':(w.status==='skip'?'✕':'');
+  const mkHTML = mk?`<span class="mk">${mk}</span>`:'';
+  const label = view==='week'? w.title : w.short;
+  return `<div class="chip kind-${w.kind}${st}" data-id="${w.id}">
+      <span class="tag">${w.tag}</span>${label}${mkHTML}</div>`;
+}
+
+function render(){
+  document.getElementById('segMonth').classList.toggle('on',view==='month');
+  document.getElementById('segWeek').classList.toggle('on',view==='week');
+  if(view==='month') renderMonth(); else renderWeek();
+}
+
+function renderMonth(){
+  const y=cursor.getFullYear(), m=cursor.getMonth();
+  document.getElementById('period').textContent=fmtPeriodMonth.format(cursor);
+  const first=new Date(y,m,1); const start=mondayOf(first);
+  const map=byDate();
+  let dow=`<div class="dow">${DOW.map(d=>`<span>${d}</span>`).join('')}</div>`;
+  let cells='';
+  for(let i=0;i<42;i++){
+    const d=addDays(start,i); const key=ymd(d);
+    const out=d.getMonth()!==m;
+    const today=key===todayYMD;
+    const items=(map[key]||[]).map(chipHTML).join('');
+    cells+=`<div class="cell${out?' out':''}${today?' today':''}" data-date="${key}">
+        <span class="dn num">${d.getDate()}</span>${items}</div>`;
+  }
+  cal.innerHTML=dow+`<div class="month">${cells}</div>`;
+}
+
+function renderWeek(){
+  const start=mondayOf(cursor); const end=addDays(start,6);
+  const sameMonth=start.getMonth()===end.getMonth();
+  const lbl = sameMonth
+    ? `${start.getDate()}–${end.getDate()} ${new Intl.DateTimeFormat('it-IT',{month:'short'}).format(end)} ${end.getFullYear()}`
+    : `${fmtDay.format(start)} – ${fmtDay.format(end)} ${end.getFullYear()}`;
+  document.getElementById('period').textContent=lbl;
+  const map=byDate();
+  let rows='';
+  for(let i=0;i<7;i++){
+    const d=addDays(start,i); const key=ymd(d); const today=key===todayYMD;
+    const items=(map[key]||[]).map(chipHTML).join('');
+    const list = items || `<div class="wempty">Riposo</div>`;
+    rows+=`<div class="wrow${today?' today':''}" data-date="${key}">
+        <div class="wdate"><span class="wd">${DOW[i]}</span><span class="dd num">${d.getDate()}</span></div>
+        <div class="wlist">${list}</div></div>`;
+  }
+  cal.innerHTML=`<div class="week">${rows}</div>`;
+}
+
+/* ---------- Navigazione ---------- */
+function setView(v){ view=v; localStorage.setItem(VIEW_KEY,v); render(); }
+document.getElementById('segMonth').onclick=()=>setView('month');
+document.getElementById('segWeek').onclick=()=>setView('week');
+document.getElementById('today').onclick=()=>{cursor=new Date(); render();};
+document.getElementById('prev').onclick=()=>{ cursor = view==='month'? new Date(cursor.getFullYear(),cursor.getMonth()-1,1) : addDays(cursor,-7); render(); };
+document.getElementById('next').onclick=()=>{ cursor = view==='month'? new Date(cursor.getFullYear(),cursor.getMonth()+1,1) : addDays(cursor,7); render(); };
+
+/* ---------- Dettaglio (bottom sheet) ---------- */
+let currentId=null;
+const backdrop=document.getElementById('backdrop');
+const KIND_COLORS={easy:'var(--easy)',long:'var(--long)',test:'var(--test)',vac:'var(--vac)'};
+function fillSheet(id){
+  const w=workouts().find(x=>x.id===id); if(!w) return;
+  const tagEl=document.getElementById('mTag');
+  tagEl.textContent=w.tag;
+  tagEl.style.background = w.status==='done'?'var(--done)':(w.status==='skip'?'var(--skip)':KIND_COLORS[w.kind]);
+  tagEl.style.color = (w.kind==='test'&&!w.status)?'var(--brand-ink)':'#fff';
+  document.getElementById('mTitle').textContent=w.title;
+  document.getElementById('mDate').textContent=fmtFull.format(parseYMD(w.date));
+  document.getElementById('mDetail').textContent=w.detail;
+  document.getElementById('btnDone').classList.toggle('active',w.status==='done');
+  document.getElementById('btnSkip').classList.toggle('active',w.status==='skip');
+  document.getElementById('moveDate').value=w.date;
+}
+function openDetail(id){ currentId=id; fillSheet(id); backdrop.classList.add('on'); }
+function closeDetail(){ backdrop.classList.remove('on'); currentId=null; }
+document.getElementById('btnDone').onclick=()=>{ const w=workouts().find(x=>x.id===currentId); setStatus(currentId, w.status==='done'?null:'done'); };
+document.getElementById('btnSkip').onclick=()=>{ const w=workouts().find(x=>x.id===currentId); setStatus(currentId, w.status==='skip'?null:'skip'); };
+document.getElementById('btnClear').onclick=()=>setStatus(currentId,null);
+document.getElementById('moveDate').onchange=e=>{ if(e.target.value) setDate(currentId,e.target.value); };
+document.getElementById('btnClose').onclick=closeDetail;
+backdrop.addEventListener('click',e=>{ if(e.target===backdrop) closeDetail(); });
+
+/* ---------- Tap + Long-press drag (pointer events) ---------- */
+let cand=null, dragging=null;
+const ghostHolder=document.getElementById('ghostHolder');
+
+function onDown(e){
+  const chip=e.target.closest('.chip'); if(!chip) return;
+  if(e.pointerType==='mouse' && e.button!==0) return;
+  cand={id:chip.dataset.id, chip, x:e.clientX, y:e.clientY, timer:null};
+  cand.timer=setTimeout(beginDrag, 260);
+  window.addEventListener('pointermove',onMove,{passive:false});
+  window.addEventListener('pointerup',onUp);
+  window.addEventListener('pointercancel',onUp);
+}
+function beginDrag(){
+  if(!cand) return;
+  const w=workouts().find(x=>x.id===cand.id);
+  const g=document.createElement('div');
+  g.id='ghost';
+  g.className='chip kind-'+w.kind+(w.status?(' '+w.status):'');
+  g.innerHTML=`<span class="tag">${w.tag}</span>${w.title}`;
+  ghostHolder.appendChild(g);
+  dragging={id:cand.id, ghost:g};
+  document.body.classList.add('dragging');
+  if(navigator.vibrate) navigator.vibrate(8);
+  positionGhost(cand.x,cand.y);
+}
+function positionGhost(x,y){ if(dragging){ dragging.ghost.style.left=x+'px'; dragging.ghost.style.top=y+'px'; } }
+function highlight(x,y){
+  document.querySelectorAll('.drop-target').forEach(el=>el.classList.remove('drop-target'));
+  const el=document.elementFromPoint(x,y); const cell=el&&el.closest('[data-date]');
+  if(cell) cell.classList.add('drop-target');
+  return cell;
+}
+function onMove(e){
+  if(dragging){ e.preventDefault(); positionGhost(e.clientX,e.clientY); highlight(e.clientX,e.clientY); return; }
+  if(cand){
+    if(Math.abs(e.clientX-cand.x)>10 || Math.abs(e.clientY-cand.y)>10){ clearTimeout(cand.timer); cleanup(); }
+  }
+}
+function onUp(e){
+  if(dragging){
+    const cell=highlight(e.clientX,e.clientY);
+    const w=workouts().find(x=>x.id===dragging.id);
+    if(cell && cell.dataset.date!==w.date) setDate(dragging.id, cell.dataset.date);
+    endDrag();
+  } else if(cand){
+    clearTimeout(cand.timer);
+    if(Math.abs(e.clientX-cand.x)<10 && Math.abs(e.clientY-cand.y)<10) openDetail(cand.id);
+  }
+  cleanup();
+}
+function endDrag(){
+  document.querySelectorAll('.drop-target').forEach(el=>el.classList.remove('drop-target'));
+  if(dragging&&dragging.ghost) dragging.ghost.remove();
+  document.body.classList.remove('dragging'); dragging=null;
+}
+function cleanup(){
+  window.removeEventListener('pointermove',onMove);
+  window.removeEventListener('pointerup',onUp);
+  window.removeEventListener('pointercancel',onUp);
+  cand=null;
+}
+cal.addEventListener('pointerdown',onDown);
+
+/* ---------- Avvio ---------- */
+render();
+
+/* ---------- Service worker (offline) ---------- */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{ navigator.serviceWorker.register('sw.js').catch(()=>{}); });
+}
+</script>
+</body>
+</html>
