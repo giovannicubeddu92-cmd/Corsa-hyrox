@@ -106,14 +106,24 @@
   .backdrop{position:fixed; inset:0; background:rgba(20,19,15,.42); display:none; z-index:60;
     align-items:flex-end; justify-content:center}
   .backdrop.on{display:flex}
-  .sheet{background:var(--surface); width:100%; max-width:680px; border-radius:20px 20px 0 0;
+  .sheet{background:var(--surface); width:100%; max-width:680px; max-height:88vh; overflow-y:auto; border-radius:20px 20px 0 0;
     padding:14px 16px calc(18px + var(--safe-b)); box-shadow:0 -8px 30px rgba(0,0,0,.2)}
   .sheet .grab{width:40px; height:4px; border-radius:999px; background:#d9dbd6; margin:2px auto 12px}
   .sheet .mtag{display:inline-block; font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
     color:#fff; padding:3px 8px; border-radius:999px}
   .sheet h2{margin:8px 0 2px; font-size:19px; font-weight:800}
   .sheet .mdate{color:var(--muted); font-size:13px; font-weight:600; text-transform:capitalize; margin-bottom:10px}
-  .sheet .detail{font-size:14px; line-height:1.5; color:#2b2b28; background:#f6f7f5; border-radius:12px; padding:12px}
+  .sheet .detail{font-size:14px; line-height:1.55; color:#2b2b28; background:#f6f7f5; border-radius:12px; padding:12px; white-space:pre-line}
+  .zonebtn{margin-left:auto; border:1px solid var(--brand); background:transparent; color:var(--brand); border-radius:999px;
+    padding:6px 11px; font-size:12px; font-weight:800; letter-spacing:.04em; white-space:nowrap}
+  .zt{width:100%; border-collapse:collapse; font-size:12.5px; margin:8px 0 4px}
+  .zt th{text-align:left; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:4px 6px; border-bottom:1px solid var(--line)}
+  .zt td{padding:7px 6px; border-bottom:1px solid var(--line); vertical-align:top}
+  .zt td:first-child{font-weight:800; white-space:nowrap}
+  .zt .num{font-weight:700}
+  .conv{font-size:13px; line-height:1.5; color:#2b2b28; margin:10px 0 0; padding-left:18px}
+  .conv li{margin:5px 0}
+  .zhead{font-size:10.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:14px 0 4px}
   .statusrow{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px}
   .statusrow button{border:1px solid var(--line); background:var(--surface); border-radius:12px; padding:11px 0;
     font-weight:700; font-size:14px}
@@ -131,7 +141,7 @@
 </head>
 <body>
 <header>
-  <div class="brandrow"><span class="accent"></span><h1>Corsa · Hyrox</h1></div>
+  <div class="brandrow"><span class="accent"></span><h1>Corsa · Hyrox</h1><button class="zonebtn" id="zonesBtn">Zone &amp; ritmi</button></div>
   <p class="sub">Hyrox Double · obiettivo sub 1h10 · 5–6 dic 2026</p>
 </header>
 
@@ -157,7 +167,7 @@
   <span><i class="dot" style="background:var(--skip)"></i>Saltato</span>
   <span><i class="dot" style="background:var(--brand)"></i>Oggi</span>
 </div>
-<p class="note">Tocca un allenamento per i dettagli · tienilo premuto e trascinalo per spostarlo · solo corse, aggiornato fino al 30 ago (S7).</p>
+<p class="note">Tocca un allenamento per i dettagli · tienilo premuto e trascinalo per spostarlo · solo corse, aggiornato fino al 4 ott (S12).</p>
 
 <div class="backdrop" id="backdrop">
   <div class="sheet" id="sheet">
@@ -176,6 +186,36 @@
       <input type="date" id="moveDate" class="num">
     </div>
     <button class="close" id="btnClose">Chiudi</button>
+  </div>
+</div>
+
+<div class="backdrop" id="zonesBackdrop">
+  <div class="sheet">
+    <div class="grab"></div>
+    <span class="mtag" style="background:var(--test);color:var(--brand-ink)">Riferimento</span>
+    <h2>Zone &amp; ritmi</h2>
+    <div class="mdate">FCmax reale ~200 · le zone dell'orologio sono sbagliate: valgono queste</div>
+    <table class="zt">
+      <tr><th>Zona</th><th>FC</th><th>Passo</th><th>Sensazione</th></tr>
+      <tr><td>Facile</td><td class="num">≤155<br><small>160 col caldo</small></td><td class="num">5:50–6:20</td><td>respiro nasale, conversazione</td></tr>
+      <tr><td>Moderato</td><td class="num">158–168</td><td class="num">5:30–5:45</td><td>impegnato ma controllato</td></tr>
+      <tr><td>Soglia</td><td class="num">172–182</td><td class="num">5:05–5:15*</td><td>"comodamente duro", frasi corte</td></tr>
+      <tr><td>VO2max</td><td class="num">185–197</td><td class="num">—</td><td>dal Blocco 3 (ottobre)</td></tr>
+      <tr><td>Allunghi</td><td class="num">—</td><td>6×20" veloci, rilassati</td><td>rec. 60–90" camminando</td></tr>
+    </table>
+    <div class="mdate" style="text-transform:none">*passo indicativo: si fissa dopo le soglie di S8–S9</div>
+
+    <div class="zhead">Convenzioni delle sedute</div>
+    <ul class="conv">
+      <li><b>Riscaldamento Q:</b> 12–15' facili + 4 allunghi da 20". <b>Defaticamento:</b> 10' facilissimi.</li>
+      <li><b>Recupero tra ripetute:</b> trotto leggero, mai fermo — 90" per frazioni fino a 6', 2' da 8' in su.</li>
+      <li><b>Facili e lunghi:</b> a digiuno, solo acqua. <b>Prima della Q:</b> eventuale mezza banana 1,5–2h prima. Niente miele.</li>
+      <li><b>Facile = FC comanda.</b> Il naso non è più un tetto affidabile: se la FC sale sopra 155–160, rallenta.</li>
+      <li><b>Lungo:</b> nessun allungo; primi 10' ancora più lenti; finale moderato solo dove indicato.</li>
+      <li><b>Ginocchio:</b> Q solo se muto. Fastidio che cresce → stop. Persiste >10 giorni → fisio.</li>
+      <li><b>Cadenza:</b> libera nei lenti (~163 è normale); sale da sola negli allunghi e in soglia.</li>
+    </ul>
+    <button class="close" id="zonesClose">Chiudi</button>
   </div>
 </div>
 
@@ -222,6 +262,39 @@ const DEFAULT_WORKOUTS = [
    detail:"Rientro dalle ferie. 45' facili a FC ≤150 + allunghi. Cadenza verso 170."},
   {id:'s7-sun', date:'2026-08-30', kind:'long', tag:'Lungo', title:"Lungo 70–75'", short:"Lungo 70–75'",
    detail:"Tutto facile, FC ≤150. Ultimo lungo della fase base: da S8 (31 ago) si aggiunge la qualità (soglia/ripetute)."},
+
+  {id:'s8-q', date:'2026-09-02', kind:'test', tag:'Soglia', title:"Soglia 4×4'", short:"Soglia 4×4'",
+   detail:"RISCALDAMENTO: 12–15' facili (FC ≤155) + 4 allunghi da 20\".\nLAVORO: 4 × 4' in soglia — FC 172–182 · passo indicativo 5:05–5:15/km · sensazione \"comodamente duro\", frasi corte.\nRECUPERO: 90\" di trotto leggero tra le ripetute (non fermarti, non camminare).\nDEFATICAMENTO: 10' facilissimi.\nTOTALE: ~45'.\nNOTE: prima seduta di qualità — cerca lo sforzo giusto guardando FC e respiro, non il passo. Solo a ginocchio muto: se dà fastidio, trasformala in 40' facili e riproviamo mercoledì prossimo. Mattina presto; a digiuno va bene (eventuale mezza banana 1,5–2h prima, niente miele)."},
+  {id:'s8-e', date:'2026-09-03', kind:'easy', tag:'Facile', title:"Facile 40' + allunghi", short:"Facile 40' +all.",
+   detail:"CORSA: 40' continui facili.\nFC: tetto 155 (fino a 160 col caldo o a fine corsa).\nPASSO: indicativo 5:50–6:20/km — comanda la FC, non il numero.\nALLUNGHI: a fine corsa 6 × 20\" veloci ma rilassati (non sprint), recupero 60–90\" camminando.\nNOTE: a digiuno, solo acqua. Cadenza libera. Il giorno dopo la soglia le gambe possono essere pesanti: se la FC sale, rallenta."},
+  {id:'s8-l', date:'2026-09-06', kind:'long', tag:'Lungo', title:"Lungo 60'", short:"Lungo 60'",
+   detail:"CORSA: 60' continui, tutto facile.\nFC: tetto 155 (max 160 col caldo). Se sale, rallenta o cammina 30\".\nPASSO: ~5:50–6:20/km, i primi 10' ancora più lenti.\nALLUNGHI: nessuno (il lungo non li prevede).\nNOTE: a digiuno, solo acqua; cena della sera prima digeribile. Si riparte da 60' perché i lunghi di agosto sono stati corti. Pantaloncini a compressione."},
+
+  {id:'s9-q', date:'2026-09-09', kind:'test', tag:'Soglia', title:"Soglia 4×6'", short:"Soglia 4×6'",
+   detail:"RISCALDAMENTO: 12–15' facili + 4 allunghi.\nLAVORO: 4 × 6' in soglia — FC 172–182 · passo indicativo 5:05–5:15/km (o il passo emerso in S8).\nRECUPERO: 90\" di trotto.\nDEFATICAMENTO: 10'.\nTOTALE: ~50'.\nNOTE: seconda Q — dopo questa manda al coach passo e FC di ogni ripetuta: da lì si fissano i ritmi definitivi. Solo a ginocchio muto."},
+  {id:'s9-e', date:'2026-09-10', kind:'easy', tag:'Facile', title:"Facile 40' + allunghi", short:"Facile 40' +all.",
+   detail:"CORSA: 40' continui facili.\nFC: tetto 155 (160 col caldo).\nPASSO: ~5:50–6:20/km, comanda la FC.\nALLUNGHI: 6 × 20\" rilassati, recupero 60–90\" camminando.\nNOTE: a digiuno. Rigenerante dopo la soglia: se le gambe sono pesanti, va ancora più piano."},
+  {id:'s9-l', date:'2026-09-13', kind:'long', tag:'Lungo', title:"Lungo 70'", short:"Lungo 70'",
+   detail:"CORSA: 70' continui, tutto facile.\nFC: tetto 155.\nPASSO: ~5:50–6:20/km, primi 10' più lenti.\nALLUNGHI: nessuno.\nNOTE: a digiuno. Primo lungo oltre l'ora da luglio: se negli ultimi 15' la FC sale, rallenta e chiudi in controllo. Se ginocchio o polpacci parlano, accorcia."},
+
+  {id:'s10-q', date:'2026-09-16', kind:'test', tag:'Soglia', title:"Soglia 3×8'", short:"Soglia 3×8'",
+   detail:"RISCALDAMENTO: 12–15' facili + 4 allunghi.\nLAVORO: 3 × 8' in soglia — FC 172–182 · passo tarato dopo S8–S9 (indicativo 5:05–5:15/km).\nRECUPERO: 2' di trotto.\nDEFATICAMENTO: 10'.\nTOTALE: ~55'.\nNOTE: ripetute più lunghe, stesso sforzo — NON partire più forte delle 4×6'. Se nell'ultima non tieni il passo, era troppo forte: rallenta di 5–10\"/km la prossima volta."},
+  {id:'s10-e', date:'2026-09-17', kind:'easy', tag:'Facile', title:"Facile 45' + allunghi", short:"Facile 45' +all.",
+   detail:"CORSA: 45' continui facili.\nFC: tetto 155 (160 col caldo).\nPASSO: ~5:50–6:20/km.\nALLUNGHI: 6 × 20\" rilassati, recupero camminando.\nNOTE: a digiuno. Cadenza libera."},
+  {id:'s10-l', date:'2026-09-20', kind:'long', tag:'Lungo', title:"Lungo 75' (fin. moderato)", short:"Lungo 75' +mod.",
+   detail:"CORSA: 65' facili (FC ≤155) + ultimi 10' MODERATI.\nMODERATO: FC 158–168 · passo ~5:30–5:45/km · impegnato ma controllato — NON è soglia.\nDEFATICAMENTO: 3–5' di cammino.\nTOTALE: 75'.\nNOTE: a digiuno. Il finale simula le gambe cotte di fine gara. Se ginocchio o polpacci parlano, salta il finale e chiudi facile."},
+
+  {id:'s11-e', date:'2026-09-23', kind:'easy', tag:'Scarico', title:"Facile 35' + allunghi", short:"Facile 35' +all.",
+   detail:"SETTIMANA DI SCARICO — niente qualità.\nCORSA: 35' facili, FC tetto 155.\nPASSO: ~5:50–6:20/km.\nALLUNGHI: 6 × 20\" rilassati, recupero camminando.\nNOTE: lo scarico serve ad assorbire 3 settimane di soglia. Non \"recuperare\" volume: gambe leggere è l'obiettivo."},
+  {id:'s11-l', date:'2026-09-27', kind:'long', tag:'Scarico', title:"Lungo 55'", short:"Lungo 55'",
+   detail:"SETTIMANA DI SCARICO.\nCORSA: 55' continui, tutto facile.\nFC: tetto 155.\nALLUNGHI: nessuno. Nessun finale moderato.\nNOTE: a digiuno, tutto lento. Venerdì in classe non massacrarti: S12 riparte con la Q più lunga del blocco."},
+
+  {id:'s12-q', date:'2026-09-30', kind:'test', tag:'Soglia', title:"Soglia 2×12'", short:"Soglia 2×12'",
+   detail:"RISCALDAMENTO: 12–15' facili + 4 allunghi.\nLAVORO: 2 × 12' in soglia — FC 172–182 · passo tarato (indicativo 5:05–5:15/km).\nRECUPERO: 2' di trotto.\nDEFATICAMENTO: 10'.\nTOTALE: ~55'.\nNOTE: 24' di soglia, la seduta più consistente del blocco. Sforzo uniforme: la seconda frazione non deve essere più lenta della prima. Se lo è, la prossima volta parti 5\"/km più piano."},
+  {id:'s12-e', date:'2026-10-01', kind:'easy', tag:'Facile', title:"Facile 45' + allunghi", short:"Facile 45' +all.",
+   detail:"CORSA: 45' continui facili.\nFC: tetto 155.\nPASSO: ~5:50–6:20/km.\nALLUNGHI: 6 × 20\" rilassati, recupero camminando.\nNOTE: a digiuno. Cadenza libera."},
+  {id:'s12-l', date:'2026-10-04', kind:'long', tag:'Lungo', title:"Lungo 80' (fin. moderato)", short:"Lungo 80' +mod.",
+   detail:"CORSA: 65' facili (FC ≤155) + finale 15' MODERATI.\nMODERATO: FC 158–168 · ~5:30–5:45/km, controllato.\nDEFATICAMENTO: 3–5' di cammino.\nTOTALE: 80'.\nNOTE: a digiuno. Ultimo lungo del Blocco 2 — S13 e i brick arrivano con l'aggiornamento di ottobre."},
 ];
 
 /* ---------- Persistenza ---------- */
@@ -352,6 +425,12 @@ document.getElementById('btnClear').onclick=()=>setStatus(currentId,null);
 document.getElementById('moveDate').onchange=e=>{ if(e.target.value) setDate(currentId,e.target.value); };
 document.getElementById('btnClose').onclick=closeDetail;
 backdrop.addEventListener('click',e=>{ if(e.target===backdrop) closeDetail(); });
+
+/* ---------- Scheda Zone & ritmi ---------- */
+const zb=document.getElementById('zonesBackdrop');
+document.getElementById('zonesBtn').onclick=()=>zb.classList.add('on');
+document.getElementById('zonesClose').onclick=()=>zb.classList.remove('on');
+zb.addEventListener('click',e=>{ if(e.target===zb) zb.classList.remove('on'); });
 
 /* ---------- Tap + Long-press drag (pointer events) ---------- */
 let cand=null, dragging=null;
