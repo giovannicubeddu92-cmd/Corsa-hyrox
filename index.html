@@ -199,11 +199,11 @@
       <tr><th>Zona</th><th>FC</th><th>Passo</th><th>Sensazione</th></tr>
       <tr><td>Facile</td><td class="num">≤155<br><small>160 col caldo</small></td><td class="num">5:50–6:20</td><td>respiro nasale, conversazione</td></tr>
       <tr><td>Moderato</td><td class="num">158–168</td><td class="num">5:30–5:45</td><td>impegnato ma controllato</td></tr>
-      <tr><td>Soglia</td><td class="num">172–182</td><td class="num">5:05–5:15*</td><td>"comodamente duro", frasi corte</td></tr>
+      <tr><td>Soglia</td><td class="num">172–182</td><td class="num">4:55–5:05*</td><td>"comodamente duro", frasi corte</td></tr>
       <tr><td>VO2max</td><td class="num">185–197</td><td class="num">—</td><td>dal Blocco 3 (ottobre)</td></tr>
       <tr><td>Allunghi</td><td class="num">—</td><td>6×20" veloci, rilassati</td><td>rec. 60–90" camminando</td></tr>
     </table>
-    <div class="mdate" style="text-transform:none">*passo indicativo: si fissa dopo le soglie di S8–S9</div>
+    <div class="mdate" style="text-transform:none">*tarato sulle soglie di S8–S9 · prima frazione sempre a 5:00–5:05</div>
 
     <div class="zhead">Convenzioni delle sedute</div>
     <ul class="conv">
@@ -278,7 +278,7 @@ const DEFAULT_WORKOUTS = [
    detail:"CORSA: 70' continui, tutto facile.\nFC: tetto 155.\nPASSO: ~5:50–6:20/km, primi 10' più lenti.\nALLUNGHI: nessuno.\nNOTE: a digiuno. Primo lungo oltre l'ora da luglio: se negli ultimi 15' la FC sale, rallenta e chiudi in controllo. Se ginocchio o polpacci parlano, accorcia."},
 
   {id:'s10-q', date:'2026-09-16', kind:'test', tag:'Soglia', title:"Soglia 3×8'", short:"Soglia 3×8'",
-   detail:"RISCALDAMENTO: 12–15' facili + 4 allunghi.\nLAVORO: 3 × 8' in soglia — FC 172–182 · passo tarato dopo S8–S9 (indicativo 5:05–5:15/km).\nRECUPERO: 2' di trotto.\nDEFATICAMENTO: 10'.\nTOTALE: ~55'.\nNOTE: ripetute più lunghe, stesso sforzo — NON partire più forte delle 4×6'. Se nell'ultima non tieni il passo, era troppo forte: rallenta di 5–10\"/km la prossima volta."},
+   detail:"RISCALDAMENTO: 12–15' facili + 4 allunghi.\nLAVORO: 3 × 8' in soglia — FC 172–182 · passo TARATO: 4:55–5:05/km — parti a 5:05, mai più veloce di 4:55.\nRECUPERO: 2' di trotto.\nDEFATICAMENTO: 10'.\nTOTALE: ~55'.\nNOTE: ripetute più lunghe, stesso sforzo — NON partire più forte delle 4×6'. Se nell'ultima non tieni il passo, era troppo forte: rallenta di 5–10\"/km la prossima volta."},
   {id:'s10-e', date:'2026-09-17', kind:'easy', tag:'Facile', title:"Facile 45' + allunghi", short:"Facile 45' +all.",
    detail:"CORSA: 45' continui facili.\nFC: tetto 155 (160 col caldo).\nPASSO: ~5:50–6:20/km.\nALLUNGHI: 6 × 20\" rilassati, recupero camminando.\nNOTE: a digiuno. Cadenza libera."},
   {id:'s10-l', date:'2026-09-20', kind:'long', tag:'Lungo', title:"Lungo 75' (fin. moderato)", short:"Lungo 75' +mod.",
@@ -290,7 +290,7 @@ const DEFAULT_WORKOUTS = [
    detail:"SETTIMANA DI SCARICO.\nCORSA: 55' continui, tutto facile.\nFC: tetto 155.\nALLUNGHI: nessuno. Nessun finale moderato.\nNOTE: a digiuno, tutto lento. Venerdì in classe non massacrarti: S12 riparte con la Q più lunga del blocco."},
 
   {id:'s12-q', date:'2026-09-30', kind:'test', tag:'Soglia', title:"Soglia 2×12'", short:"Soglia 2×12'",
-   detail:"RISCALDAMENTO: 12–15' facili + 4 allunghi.\nLAVORO: 2 × 12' in soglia — FC 172–182 · passo tarato (indicativo 5:05–5:15/km).\nRECUPERO: 2' di trotto.\nDEFATICAMENTO: 10'.\nTOTALE: ~55'.\nNOTE: 24' di soglia, la seduta più consistente del blocco. Sforzo uniforme: la seconda frazione non deve essere più lenta della prima. Se lo è, la prossima volta parti 5\"/km più piano."},
+   detail:"RISCALDAMENTO: 12–15' facili + 4 allunghi.\nLAVORO: 2 × 12' in soglia — FC 172–182 · passo TARATO: 4:55–5:05/km — prima frazione a 5:00–5:05.\nRECUPERO: 2' di trotto.\nDEFATICAMENTO: 10'.\nTOTALE: ~55'.\nNOTE: 24' di soglia, la seduta più consistente del blocco. Sforzo uniforme: la seconda frazione non deve essere più lenta della prima. Se lo è, la prossima volta parti 5\"/km più piano."},
   {id:'s12-e', date:'2026-10-01', kind:'easy', tag:'Facile', title:"Facile 45' + allunghi", short:"Facile 45' +all.",
    detail:"CORSA: 45' continui facili.\nFC: tetto 155.\nPASSO: ~5:50–6:20/km.\nALLUNGHI: 6 × 20\" rilassati, recupero camminando.\nNOTE: a digiuno. Cadenza libera."},
   {id:'s12-l', date:'2026-10-04', kind:'long', tag:'Lungo', title:"Lungo 80' (fin. moderato)", short:"Lungo 80' +mod.",
