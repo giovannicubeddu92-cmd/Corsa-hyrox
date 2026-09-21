@@ -197,20 +197,20 @@
     <div class="mdate">FCmax reale ~200 · le zone dell'orologio sono sbagliate: valgono queste</div>
     <table class="zt">
       <tr><th>Zona</th><th>FC</th><th>Passo</th><th>Sensazione</th></tr>
-      <tr><td>Facile</td><td class="num">≤155<br><small>160 col caldo</small></td><td class="num">5:50–6:20</td><td>respiro nasale, conversazione</td></tr>
-      <tr><td>Moderato</td><td class="num">158–168</td><td class="num">5:30–5:45</td><td>impegnato ma controllato</td></tr>
+      <tr><td>Facile</td><td class="num">140–160<br><small>fino a 165 caldo/finale</small></td><td class="num">5:50–6:30</td><td>parti a 150–155, lascia salire la deriva</td></tr>
+      <tr><td>Moderato</td><td class="num">160–170</td><td class="num">5:30–5:45</td><td>impegnato ma controllato</td></tr>
       <tr><td>Soglia</td><td class="num">172–182</td><td class="num">4:55–5:05*</td><td>"comodamente duro", frasi corte</td></tr>
       <tr><td>VO2max</td><td class="num">185–197</td><td class="num">—</td><td>dal Blocco 3 (ottobre)</td></tr>
       <tr><td>Allunghi</td><td class="num">—</td><td>6×20" veloci, rilassati</td><td>rec. 60–90" camminando</td></tr>
     </table>
-    <div class="mdate" style="text-transform:none">*tarato sulle soglie di S8–S9 · prima frazione sempre a 5:00–5:05</div>
+    <div class="mdate" style="text-transform:none">*tarato sulle soglie di S8–S10 · prima frazione sempre a 5:00–5:05 · zone riviste il 20/9 (fascia cardio)</div>
 
     <div class="zhead">Convenzioni delle sedute</div>
     <ul class="conv">
       <li><b>Riscaldamento Q:</b> 12–15' facili + 4 allunghi da 20". <b>Defaticamento:</b> 10' facilissimi.</li>
       <li><b>Recupero tra ripetute:</b> trotto leggero, mai fermo — 90" per frazioni fino a 6', 2' da 8' in su.</li>
       <li><b>Facili e lunghi:</b> a digiuno, solo acqua. <b>Prima della Q:</b> eventuale mezza banana 1,5–2h prima. Niente miele.</li>
-      <li><b>Facile = FC comanda.</b> Il naso non è più un tetto affidabile: se la FC sale sopra 155–160, rallenta.</li>
+      <li><b>Facile = FC comanda.</b> Parti a 150–155 e lascia salire la deriva verso 160–165. Sopra 165 in un lento (caldo escluso): rallenta.</li>
       <li><b>Lungo:</b> nessun allungo; primi 10' ancora più lenti; finale moderato solo dove indicato.</li>
       <li><b>Ginocchio:</b> Q solo se muto. Fastidio che cresce → stop. Persiste >10 giorni → fisio.</li>
       <li><b>Cadenza:</b> libera nei lenti (~163 è normale); sale da sola negli allunghi e in soglia.</li>
@@ -285,14 +285,14 @@ const DEFAULT_WORKOUTS = [
    detail:"CORSA: 65' facili (FC ≤155) + ultimi 10' MODERATI.\nMODERATO: FC 158–168 · passo ~5:30–5:45/km · impegnato ma controllato — NON è soglia.\nDEFATICAMENTO: 3–5' di cammino.\nTOTALE: 75'.\nNOTE: a digiuno. Il finale simula le gambe cotte di fine gara. Se ginocchio o polpacci parlano, salta il finale e chiudi facile."},
 
   {id:'s11-e', date:'2026-09-23', kind:'easy', tag:'Scarico', title:"Facile 35' + allunghi", short:"Facile 35' +all.",
-   detail:"SETTIMANA DI SCARICO — niente qualità.\nCORSA: 35' facili, FC tetto 155.\nPASSO: ~5:50–6:20/km.\nALLUNGHI: 6 × 20\" rilassati, recupero camminando.\nNOTE: lo scarico serve ad assorbire 3 settimane di soglia. Non \"recuperare\" volume: gambe leggere è l'obiettivo."},
+   detail:"SETTIMANA DI SCARICO — niente qualità.\nCORSA: 35' facili, FC tetto 160 (parti a 150-155).\nPASSO: ~5:50–6:20/km.\nALLUNGHI: 6 × 20\" rilassati, recupero camminando.\nNOTE: lo scarico serve ad assorbire 3 settimane di soglia. Non \"recuperare\" volume: gambe leggere è l'obiettivo."},
   {id:'s11-l', date:'2026-09-27', kind:'long', tag:'Scarico', title:"Lungo 55'", short:"Lungo 55'",
-   detail:"SETTIMANA DI SCARICO.\nCORSA: 55' continui, tutto facile.\nFC: tetto 155.\nALLUNGHI: nessuno. Nessun finale moderato.\nNOTE: a digiuno, tutto lento. Venerdì in classe non massacrarti: S12 riparte con la Q più lunga del blocco."},
+   detail:"SETTIMANA DI SCARICO.\nCORSA: 55' continui, tutto facile.\nFC: tetto 160 (parti a 150-155).\nALLUNGHI: nessuno. Nessun finale moderato.\nNOTE: a digiuno, tutto lento. Venerdì in classe non massacrarti: S12 riparte con la Q più lunga del blocco."},
 
   {id:'s12-q', date:'2026-09-30', kind:'test', tag:'Soglia', title:"Soglia 2×12'", short:"Soglia 2×12'",
    detail:"RISCALDAMENTO: 12–15' facili + 4 allunghi.\nLAVORO: 2 × 12' in soglia — FC 172–182 · passo TARATO: 4:55–5:05/km — prima frazione a 5:00–5:05.\nRECUPERO: 2' di trotto.\nDEFATICAMENTO: 10'.\nTOTALE: ~55'.\nNOTE: 24' di soglia, la seduta più consistente del blocco. Sforzo uniforme: la seconda frazione non deve essere più lenta della prima. Se lo è, la prossima volta parti 5\"/km più piano."},
   {id:'s12-e', date:'2026-10-01', kind:'easy', tag:'Facile', title:"Facile 45' + allunghi", short:"Facile 45' +all.",
-   detail:"CORSA: 45' continui facili.\nFC: tetto 155.\nPASSO: ~5:50–6:20/km.\nALLUNGHI: 6 × 20\" rilassati, recupero camminando.\nNOTE: a digiuno. Cadenza libera."},
+   detail:"CORSA: 45' continui facili.\nFC: tetto 160 (parti a 150-155).\nPASSO: ~5:50–6:20/km.\nALLUNGHI: 6 × 20\" rilassati, recupero camminando.\nNOTE: a digiuno. Cadenza libera."},
   {id:'s12-l', date:'2026-10-04', kind:'long', tag:'Lungo', title:"Lungo 80' (fin. moderato)", short:"Lungo 80' +mod.",
    detail:"CORSA: 65' facili (FC ≤155) + finale 15' MODERATI.\nMODERATO: FC 158–168 · ~5:30–5:45/km, controllato.\nDEFATICAMENTO: 3–5' di cammino.\nTOTALE: 80'.\nNOTE: a digiuno. Ultimo lungo del Blocco 2 — S13 e i brick arrivano con l'aggiornamento di ottobre."},
 ];
