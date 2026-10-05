@@ -4,146 +4,214 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <title>Corsa · Hyrox</title>
-<meta name="theme-color" content="#15130f">
+<meta name="theme-color" content="#0a0b0d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Corsa Hyrox">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <style>
   :root{
-    --bg:#f5f6f4; --surface:#ffffff; --ink:#15130f; --muted:#6b7280; --line:#e6e8e6;
-    --brand:#c8e600; --brand-ink:#1a2200;
-    --easy:#37618e; --long:#243b5c; --test:#b9d400; --vac:#6d5a8c;
-    --done:#16a34a; --skip:#dc2626;
+    --bg:#0a0b0d; --s1:#131519; --s2:#1a1d22; --s3:#23272e; --line:#262a31;
+    --ink:#f1f3f6; --muted:#8a909a; --dim:#5d636d;
+    --brand:#d6ff3d; --brand-ink:#141a00; --hot:#ff5c2b;
+    --done:#2fd47c; --skip:#ff4d5e;
     --safe-t:env(safe-area-inset-top); --safe-b:env(safe-area-inset-bottom);
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
   html,body{margin:0; background:var(--bg); color:var(--ink);
-    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
-  body{padding:0 0 calc(16px + var(--safe-b)); max-width:680px; margin:0 auto;}
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  body{padding:0 0 calc(24px + var(--safe-b)); max-width:680px; margin:0 auto}
   .num{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
+  button{font-family:inherit; cursor:pointer}
 
-  header{position:sticky; top:0; z-index:5; background:var(--ink); color:#fff;
-    padding:calc(12px + var(--safe-t)) 16px 12px; }
-  .brandrow{display:flex; align-items:baseline; gap:10px}
-  .brandrow h1{margin:0; font-size:20px; font-weight:800; letter-spacing:.06em; text-transform:uppercase}
-  .brandrow .accent{width:10px; height:10px; border-radius:2px; background:var(--brand); align-self:center}
-  header .sub{margin:2px 0 0; font-size:11.5px; color:#b9bcb4; letter-spacing:.02em}
+  /* ---------- HERO ---------- */
+  .top{padding:calc(14px + var(--safe-t)) 16px 18px;
+    background:radial-gradient(120% 90% at 100% 0%, rgba(214,255,61,.16) 0%, rgba(214,255,61,0) 55%),
+               radial-gradient(90% 80% at 0% 100%, rgba(255,92,43,.12) 0%, rgba(255,92,43,0) 60%), var(--bg)}
+  .toprow{display:flex; align-items:center; justify-content:space-between}
+  .logo{display:flex; align-items:center; gap:8px; font-weight:900; font-size:15px; letter-spacing:.14em}
+  .logo .mark{width:22px; height:22px; border-radius:7px; background:var(--brand);
+    display:grid; place-items:center; color:var(--brand-ink); font-size:12px; font-weight:900; letter-spacing:0}
+  .zonebtn{border:1px solid var(--line); background:var(--s1); color:var(--ink); border-radius:999px;
+    padding:8px 13px; font-size:12px; font-weight:700; letter-spacing:.02em}
+  .hero{display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-top:20px}
+  .count{display:flex; align-items:flex-end; gap:10px}
+  .count .big{font-size:76px; line-height:.82; font-weight:900; letter-spacing:-.04em; color:var(--brand)}
+  .count .unit{font-size:13px; line-height:1.15; font-weight:700; color:var(--muted); padding-bottom:4px; text-transform:uppercase; letter-spacing:.06em}
+  .goal{text-align:right; font-size:13px; font-weight:800; line-height:1.35}
+  .goal span{color:var(--muted); font-weight:600; font-size:12px}
+  .bar{height:6px; border-radius:999px; background:var(--s3); margin-top:18px; overflow:hidden; display:flex}
+  .bar i{display:block; height:100%; background:var(--done)}
+  .bar i.sk{background:var(--skip)}
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px}
+  .stats div{background:var(--s1); border:1px solid var(--line); border-radius:14px; padding:10px 10px 9px}
+  .stats b{display:block; font-size:22px; font-weight:900; letter-spacing:-.02em; line-height:1}
+  .stats span{display:block; margin-top:5px; font-size:10.5px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.07em}
 
-  .toolbar{display:flex; align-items:center; gap:8px; padding:10px 12px 4px}
-  .seg{display:flex; background:#e9ebe8; border-radius:999px; padding:3px}
-  .seg button{border:0; background:transparent; color:var(--muted); font-weight:700; font-size:13px;
-    padding:7px 14px; border-radius:999px}
-  .seg button.on{background:var(--ink); color:#fff}
+  .next{display:flex; align-items:center; gap:12px; width:calc(100% - 24px); margin:4px 12px 6px; text-align:left;
+    background:var(--s1); border:1px solid var(--line); border-radius:18px; padding:14px; color:var(--ink); position:relative; overflow:hidden}
+  .next::before{content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--c,var(--brand))}
+  .next .ico{width:44px; height:44px; flex:none; border-radius:13px; display:grid; place-items:center;
+    background:var(--cbg,rgba(214,255,61,.14)); color:var(--c,var(--brand)); font-size:20px; font-weight:900}
+  .next .lbl{font-size:10.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+  .next .ttl{font-size:16px; font-weight:800; margin-top:3px; line-height:1.2}
+  .next .when{font-size:12.5px; color:var(--muted); margin-top:3px; font-weight:600; text-transform:capitalize}
+  .next .go{margin-left:auto; color:var(--dim); font-size:22px}
+  .next.empty{display:none}
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{position:sticky; top:0; z-index:5; display:flex; align-items:center; gap:8px;
+    padding:calc(8px + var(--safe-t)*0) 12px 8px; padding-top:10px;
+    background:rgba(10,11,13,.86); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px)}
+  .seg{display:flex; background:var(--s1); border:1px solid var(--line); border-radius:999px; padding:3px}
+  .seg button{border:0; background:transparent; color:var(--muted); font-weight:800; font-size:13px; padding:7px 14px; border-radius:999px}
+  .seg button.on{background:var(--ink); color:#0a0b0d}
   .spacer{flex:1}
-  .nav{display:flex; align-items:center; gap:2px}
-  .iconbtn{border:1px solid var(--line); background:var(--surface); border-radius:10px; width:38px; height:38px;
-    font-size:18px; color:var(--ink); display:grid; place-items:center}
-  .today-btn{border:1px solid var(--line); background:var(--surface); border-radius:10px; height:38px; padding:0 12px;
-    font-weight:700; font-size:13px}
-  .period{padding:2px 14px 8px; font-size:15px; font-weight:800; letter-spacing:.02em; text-transform:capitalize}
+  .nav{display:flex; align-items:center; gap:6px}
+  .iconbtn{border:1px solid var(--line); background:var(--s1); border-radius:12px; width:38px; height:38px;
+    font-size:20px; color:var(--ink); display:grid; place-items:center; line-height:1}
+  .today-btn{border:1px solid var(--line); background:var(--s1); color:var(--brand); border-radius:12px; height:38px; padding:0 13px;
+    font-weight:800; font-size:13px}
+  .period{padding:6px 16px 10px; font-size:22px; font-weight:900; letter-spacing:-.01em; text-transform:capitalize}
 
-  /* MONTH */
-  .dow{display:grid; grid-template-columns:repeat(7,1fr); padding:0 8px; gap:6px}
-  .dow span{text-align:center; font-size:11px; font-weight:700; color:var(--muted); padding-bottom:4px}
-  .month{display:grid; grid-template-columns:repeat(7,1fr); gap:6px; padding:0 8px}
-  .cell{min-height:74px; background:var(--surface); border:1px solid var(--line); border-radius:12px;
-    padding:5px 5px 6px; display:flex; flex-direction:column; gap:4px; overflow:hidden}
-  .cell.out{background:#f0f1ef; border-color:#eef0ed}
-  .cell.out .dn{color:#c2c6c0}
-  .dn{font-size:12px; font-weight:700; color:var(--muted); line-height:1; align-self:flex-start;
-    width:22px; height:22px; display:grid; place-items:center; border-radius:999px}
+  /* ---------- MONTH ---------- */
+  .dow{display:grid; grid-template-columns:repeat(7,1fr); padding:0 6px; gap:4px}
+  .dow span{text-align:center; font-size:10.5px; font-weight:800; color:var(--dim); padding-bottom:6px; text-transform:uppercase; letter-spacing:.06em}
+  .month{display:grid; grid-template-columns:repeat(7,1fr); gap:4px; padding:0 6px}
+  .cell{min-height:78px; background:var(--s1); border:1px solid transparent; border-radius:11px;
+    padding:4px 3px 5px; display:flex; flex-direction:column; gap:4px; overflow:hidden}
+  .cell.out{opacity:.32}
+  .dn{font-size:12px; font-weight:800; color:var(--muted); line-height:1; align-self:flex-start;
+    width:22px; height:22px; display:grid; place-items:center; border-radius:999px; margin-left:1px}
+  .cell.today{border-color:var(--brand); box-shadow:0 0 0 1px var(--brand) inset, 0 0 18px rgba(214,255,61,.12)}
   .cell.today .dn{background:var(--brand); color:var(--brand-ink)}
-  .cell.today{border-color:#c9d200; box-shadow:0 0 0 1.5px #dbe86a inset}
 
-  /* WEEK (vertical) */
+  /* ---------- WEEK ---------- */
   .week{display:flex; flex-direction:column; gap:8px; padding:2px 12px}
-  .wrow{display:grid; grid-template-columns:64px 1fr; gap:10px; background:var(--surface);
-    border:1px solid var(--line); border-radius:14px; padding:10px; min-height:64px}
-  .wrow.today{border-color:#c9d200; box-shadow:0 0 0 1.5px #dbe86a inset}
-  .wdate{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px}
-  .wdate .wd{font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.04em}
-  .wdate .dd{font-size:22px; font-weight:800}
-  .wrow.today .dd{color:#5a6a00}
+  .wrow{display:grid; grid-template-columns:56px 1fr; gap:10px; background:var(--s1);
+    border:1px solid var(--line); border-radius:16px; padding:10px; min-height:66px}
+  .wrow.today{border-color:var(--brand); box-shadow:0 0 18px rgba(214,255,61,.10)}
+  .wdate{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px}
+  .wdate .wd{font-size:10.5px; font-weight:800; color:var(--dim); text-transform:uppercase; letter-spacing:.08em}
+  .wdate .dd{font-size:24px; font-weight:900; letter-spacing:-.02em}
+  .wrow.today .dd{color:var(--brand)}
   .wlist{display:flex; flex-direction:column; gap:6px; justify-content:center}
-  .wempty{color:#b8bcb4; font-size:13px; align-self:center; justify-self:start; padding-left:2px}
+  .wempty{color:var(--dim); font-size:13px; font-weight:600}
 
-  /* CHIPS */
-  .chip{position:relative; border-radius:9px; padding:5px 8px; color:#fff; cursor:pointer;
+  /* ---------- CHIPS ---------- */
+  .chip{--c:#8a94a6; --cbg:rgba(138,148,166,.16);
+    position:relative; border-radius:8px; padding:5px 6px 5px 8px; color:var(--ink); cursor:pointer;
+    background:var(--cbg); border-left:3px solid var(--c);
     -webkit-user-select:none; user-select:none; -webkit-touch-callout:none;
-    font-size:11.5px; font-weight:700; line-height:1.15; touch-action:auto;
-    box-shadow:0 1px 0 rgba(0,0,0,.06)}
-  .chip .tag{display:block; font-size:9px; font-weight:800; letter-spacing:.08em; opacity:.85; text-transform:uppercase}
-  .chip.kind-easy{background:var(--easy)}
-  .chip.kind-long{background:var(--long)}
-  .chip.kind-vac{background:var(--vac)}
-  .chip.kind-test{background:var(--test); color:var(--brand-ink)}
-  .chip.done{background:var(--done); color:#fff}
-  .chip.skip{background:var(--skip); color:#fff}
-  .chip .mk{position:absolute; top:-6px; right:-4px; width:18px; height:18px; border-radius:999px;
-    display:grid; place-items:center; font-size:11px; background:#fff; color:var(--ink);
-    box-shadow:0 1px 3px rgba(0,0,0,.25)}
-  .chip.done .mk{background:#fff; color:var(--done)}
-  .chip.skip .mk{background:#fff; color:var(--skip)}
-  .week .chip{font-size:13px; padding:8px 10px}
-  .week .chip .tag{font-size:10px}
+    font-size:11px; font-weight:700; line-height:1.18; touch-action:auto}
+  .chip .tag{display:block; font-size:8.5px; font-weight:900; letter-spacing:.09em; color:var(--c); text-transform:uppercase; margin-bottom:1px}
+  .chip.kind-easy {--c:#4c8dff; --cbg:rgba(76,141,255,.15)}
+  .chip.kind-long {--c:#9a7bff; --cbg:rgba(154,123,255,.16)}
+  .chip.kind-vac  {--c:#8a94a6; --cbg:rgba(138,148,166,.14)}
+  .chip.kind-test {--c:#d6ff3d; --cbg:rgba(214,255,61,.12)}
+  .chip.kind-race {--c:#ff6a2b; --cbg:rgba(255,106,43,.16)}
+  .chip.kind-brick{--c:#22d3c5; --cbg:rgba(34,211,197,.14)}
+  .chip.kind-gara {--c:var(--brand-ink); --cbg:var(--brand); color:var(--brand-ink); border-left-color:var(--brand);
+    box-shadow:0 0 16px rgba(214,255,61,.35)}
+  .chip.kind-gara .tag{color:var(--brand-ink)}
+  .chip.done{--c:var(--done); --cbg:rgba(47,212,124,.16)}
+  .chip.skip{--c:var(--skip); --cbg:rgba(255,77,94,.12); color:var(--muted)}
+  .chip.skip .lbl{text-decoration:line-through; text-decoration-thickness:1.5px}
+  .chip .mk{position:absolute; top:4px; right:4px; width:15px; height:15px; border-radius:999px;
+    display:grid; place-items:center; font-size:9px; font-weight:900; background:var(--c); color:#0a0b0d}
+  .month .chip{padding:4px 2px 4px 4px; font-size:9.5px; line-height:1.22; letter-spacing:-.015em; border-left-width:2.5px;
+    border-radius:6px; overflow-wrap:break-word}
+  .month .chip .tag{display:none}
+  .month .chip .mk{top:-5px; right:-3px; width:14px; height:14px; font-size:8.5px; box-shadow:0 0 0 2px var(--s1)}
+  .month .cell{overflow:visible}
+  .week .chip{font-size:14px; padding:10px 12px 10px 12px; border-radius:11px}
+  .week .chip .tag{font-size:10px; margin-bottom:3px}
+  .week .chip .mk{top:50%; transform:translateY(-50%); right:10px; width:22px; height:22px; font-size:12px}
+  .week .chip.done,.week .chip.skip{padding-right:40px}
 
   .dragging{touch-action:none; user-select:none}
-  .drop-target{outline:2px dashed var(--brand) !important; outline-offset:-2px; background:#fbffd6 !important}
-  #ghost{position:fixed; z-index:50; pointer-events:none; transform:translate(-50%,-50%) scale(1.04);
-    opacity:.95; box-shadow:0 8px 22px rgba(0,0,0,.28); max-width:150px}
+  .drop-target{outline:2px dashed var(--brand) !important; outline-offset:-2px; background:rgba(214,255,61,.08) !important}
+  #ghost{position:fixed; z-index:50; pointer-events:none; transform:translate(-50%,-50%) scale(1.06);
+    opacity:.97; box-shadow:0 12px 30px rgba(0,0,0,.6); max-width:170px; background:var(--s3)}
 
-  /* LEGEND */
-  .legend{display:flex; flex-wrap:wrap; gap:12px; padding:14px 16px 4px; color:var(--muted); font-size:11.5px}
-  .legend span{display:inline-flex; align-items:center; gap:6px}
-  .dot{width:12px; height:12px; border-radius:4px; display:inline-block}
-  .note{padding:6px 16px 0; color:#9aa09a; font-size:11px}
+  /* ---------- LEGEND ---------- */
+  .legend{display:flex; flex-wrap:wrap; gap:7px; padding:16px 12px 4px}
+  .legend span{display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; color:var(--muted);
+    background:var(--s1); border:1px solid var(--line); padding:5px 9px 5px 7px; border-radius:999px}
+  .dot{width:9px; height:9px; border-radius:3px; display:inline-block}
+  .note{padding:10px 16px 0; color:var(--dim); font-size:11.5px; line-height:1.45}
 
-  /* MODAL */
-  .backdrop{position:fixed; inset:0; background:rgba(20,19,15,.42); display:none; z-index:60;
-    align-items:flex-end; justify-content:center}
+  /* ---------- SHEETS ---------- */
+  .backdrop{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; z-index:60;
+    align-items:flex-end; justify-content:center; -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px)}
   .backdrop.on{display:flex}
-  .sheet{background:var(--surface); width:100%; max-width:680px; max-height:88vh; overflow-y:auto; border-radius:20px 20px 0 0;
-    padding:14px 16px calc(18px + var(--safe-b)); box-shadow:0 -8px 30px rgba(0,0,0,.2)}
-  .sheet .grab{width:40px; height:4px; border-radius:999px; background:#d9dbd6; margin:2px auto 12px}
-  .sheet .mtag{display:inline-block; font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
-    color:#fff; padding:3px 8px; border-radius:999px}
-  .sheet h2{margin:8px 0 2px; font-size:19px; font-weight:800}
-  .sheet .mdate{color:var(--muted); font-size:13px; font-weight:600; text-transform:capitalize; margin-bottom:10px}
-  .sheet .detail{font-size:14px; line-height:1.55; color:#2b2b28; background:#f6f7f5; border-radius:12px; padding:12px; white-space:pre-line}
-  .zonebtn{margin-left:auto; border:1px solid var(--brand); background:transparent; color:var(--brand); border-radius:999px;
-    padding:6px 11px; font-size:12px; font-weight:800; letter-spacing:.04em; white-space:nowrap}
+  .sheet{background:var(--s1); width:100%; max-width:680px; max-height:88vh; overflow-y:auto; border-radius:24px 24px 0 0;
+    border:1px solid var(--line); border-bottom:0;
+    padding:12px 16px calc(18px + var(--safe-b)); box-shadow:0 -12px 40px rgba(0,0,0,.6);
+    animation:up .22s ease-out}
+  @keyframes up{from{transform:translateY(24px); opacity:.4} to{transform:none; opacity:1}}
+  @media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+  .sheet .grab{width:42px; height:5px; border-radius:999px; background:var(--s3); margin:2px auto 14px}
+  .sheet .mtag{display:inline-block; font-size:10.5px; font-weight:900; letter-spacing:.1em; text-transform:uppercase;
+    color:#0a0b0d; padding:4px 10px; border-radius:999px}
+  .sheet h2{margin:10px 0 3px; font-size:24px; font-weight:900; letter-spacing:-.01em; line-height:1.15}
+  .sheet .mdate{color:var(--muted); font-size:13px; font-weight:600; text-transform:capitalize; margin-bottom:12px}
+  .sheet .detail{font-size:14.5px; line-height:1.6; color:#d9dce1; background:var(--s2); border:1px solid var(--line);
+    border-radius:14px; padding:14px; white-space:pre-line}
   .zt{width:100%; border-collapse:collapse; font-size:12.5px; margin:8px 0 4px}
-  .zt th{text-align:left; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:4px 6px; border-bottom:1px solid var(--line)}
-  .zt td{padding:7px 6px; border-bottom:1px solid var(--line); vertical-align:top}
-  .zt td:first-child{font-weight:800; white-space:nowrap}
-  .zt .num{font-weight:700}
-  .conv{font-size:13px; line-height:1.5; color:#2b2b28; margin:10px 0 0; padding-left:18px}
-  .conv li{margin:5px 0}
-  .zhead{font-size:10.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:14px 0 4px}
-  .statusrow{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px}
-  .statusrow button{border:1px solid var(--line); background:var(--surface); border-radius:12px; padding:11px 0;
-    font-weight:700; font-size:14px}
-  .statusrow button.done{border-color:var(--done); color:var(--done)}
-  .statusrow button.done.active{background:var(--done); color:#fff}
-  .statusrow button.skip{border-color:var(--skip); color:var(--skip)}
-  .statusrow button.skip.active{background:var(--skip); color:#fff}
+  .zt th{text-align:left; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--dim); padding:6px; border-bottom:1px solid var(--line)}
+  .zt td{padding:9px 6px; border-bottom:1px solid var(--line); vertical-align:top; color:#d9dce1}
+  .zt td:first-child{font-weight:800; white-space:nowrap; color:var(--ink)}
+  .zt .num{font-weight:800; color:var(--ink)}
+  .zt small{color:var(--muted)}
+  .conv{font-size:13.5px; line-height:1.55; color:#d9dce1; margin:10px 0 0; padding-left:18px}
+  .conv li{margin:6px 0}
+  .conv b{color:var(--ink)}
+  .zhead{font-size:10.5px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); margin:18px 0 4px}
+  .statusrow{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:14px}
+  .statusrow button{border:1px solid var(--line); background:var(--s2); color:var(--ink); border-radius:14px; padding:13px 0;
+    font-weight:800; font-size:14px}
+  .statusrow button.done{color:var(--done); border-color:rgba(47,212,124,.4)}
+  .statusrow button.done.active{background:var(--done); color:#0a0b0d; border-color:var(--done)}
+  .statusrow button.skip{color:var(--skip); border-color:rgba(255,77,94,.4)}
+  .statusrow button.skip.active{background:var(--skip); color:#0a0b0d; border-color:var(--skip)}
   .statusrow button.clear{color:var(--muted)}
-  .moverow{display:flex; align-items:center; gap:8px; margin-top:12px; font-size:13px; color:var(--muted)}
-  .moverow input{flex:1; border:1px solid var(--line); border-radius:10px; padding:9px; font-size:14px;
-    font-family:inherit; color:var(--ink); background:var(--surface)}
-  .close{width:100%; margin-top:12px; border:0; background:var(--ink); color:#fff; border-radius:12px;
-    padding:12px; font-weight:800; font-size:15px}
+  .moverow{display:flex; align-items:center; gap:10px; margin-top:12px; font-size:13px; color:var(--muted); font-weight:600}
+  .moverow input{flex:1; border:1px solid var(--line); border-radius:12px; padding:10px; font-size:14px;
+    font-family:inherit; color:var(--ink); background:var(--s2); color-scheme:dark}
+  .close{width:100%; margin-top:14px; border:0; background:var(--ink); color:#0a0b0d; border-radius:14px;
+    padding:14px; font-weight:900; font-size:15px}
+  button:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
 </style>
 </head>
 <body>
-<header>
-  <div class="brandrow"><span class="accent"></span><h1>Corsa · Hyrox</h1><button class="zonebtn" id="zonesBtn">Zone &amp; ritmi</button></div>
-  <p class="sub">Hyrox Double · obiettivo sub 1h10 · 5–6 dic 2026</p>
+<header class="top">
+  <div class="toprow">
+    <div class="logo"><span class="mark">H</span>HYROX RUN</div>
+    <button class="zonebtn" id="zonesBtn">Zone &amp; ritmi</button>
+  </div>
+  <div class="hero">
+    <div class="count"><span class="big num" id="dLeft">–</span><span class="unit" id="dUnit">giorni<br>alla gara</span></div>
+    <div class="goal">Hyrox Double<br>sub 1:10<br><span id="raceDate">5–6 dic 2026</span></div>
+  </div>
+  <div class="bar" aria-hidden="true"><i id="pDone"></i><i class="sk" id="pSkip"></i></div>
+  <div class="stats num">
+    <div><b id="sDone">0</b><span>Fatti</span></div>
+    <div><b id="sSkip">0</b><span>Saltati</span></div>
+    <div><b id="sLeft">0</b><span>Da fare</span></div>
+    <div><b id="sPct">–</b><span>Costanza</span></div>
+  </div>
 </header>
+
+<button class="next empty" id="nextCard" type="button">
+  <span class="ico" id="nIco">›</span>
+  <span><span class="lbl" id="nLbl">Prossimo</span><span class="ttl" id="nTtl" style="display:block"></span><span class="when" id="nWhen" style="display:block"></span></span>
+  <span class="go">›</span>
+</button>
 
 <div class="toolbar">
   <div class="seg">
@@ -162,12 +230,15 @@
 <div id="cal"></div>
 
 <div class="legend">
-  <span><i class="dot" style="background:var(--easy)"></i>Da fare</span>
+  <span><i class="dot" style="background:#4c8dff"></i>Facile</span>
+  <span><i class="dot" style="background:#9a7bff"></i>Lungo</span>
+  <span><i class="dot" style="background:#d6ff3d"></i>Soglia</span>
+  <span><i class="dot" style="background:#ff6a2b"></i>Ritmo gara</span>
+  <span><i class="dot" style="background:#22d3c5"></i>Brick</span>
   <span><i class="dot" style="background:var(--done)"></i>Fatto</span>
   <span><i class="dot" style="background:var(--skip)"></i>Saltato</span>
-  <span><i class="dot" style="background:var(--brand)"></i>Oggi</span>
 </div>
-<p class="note">Tocca un allenamento per i dettagli · tienilo premuto e trascinalo per spostarlo · solo corse, aggiornato fino al 4 ott (S12).</p>
+<p class="note">Tocca un allenamento per i dettagli · tienilo premuto e trascinalo per spostarlo.</p>
 
 <div class="backdrop" id="backdrop">
   <div class="sheet" id="sheet">
@@ -192,7 +263,7 @@
 <div class="backdrop" id="zonesBackdrop">
   <div class="sheet">
     <div class="grab"></div>
-    <span class="mtag" style="background:var(--test);color:var(--brand-ink)">Riferimento</span>
+    <span class="mtag" style="background:var(--brand);color:var(--brand-ink)">Riferimento</span>
     <h2>Zone &amp; ritmi</h2>
     <div class="mdate">FCmax reale ~200 · le zone dell'orologio sono sbagliate: valgono queste</div>
     <table class="zt">
@@ -200,10 +271,11 @@
       <tr><td>Facile</td><td class="num">140–160<br><small>fino a 165 caldo/finale</small></td><td class="num">5:50–6:30</td><td>parti a 150–155, lascia salire la deriva</td></tr>
       <tr><td>Moderato</td><td class="num">160–170</td><td class="num">5:30–5:45</td><td>impegnato ma controllato</td></tr>
       <tr><td>Soglia</td><td class="num">172–182</td><td class="num">4:55–5:05*</td><td>"comodamente duro", frasi corte</td></tr>
-      <tr><td>VO2max</td><td class="num">185–197</td><td class="num">—</td><td>dal Blocco 3 (ottobre)</td></tr>
+      <tr><td><b>Ritmo gara</b></td><td class="num">175–185</td><td class="num"><b>4:35–4:45</b></td><td>frazioni da 1 km, brick · riferimento 4:40</td></tr>
+      <tr><td>VO2max</td><td class="num">185–195</td><td class="num">4:20–4:30</td><td>S18, frazioni corte</td></tr>
       <tr><td>Allunghi</td><td class="num">—</td><td>6×20" veloci, rilassati</td><td>rec. 60–90" camminando</td></tr>
     </table>
-    <div class="mdate" style="text-transform:none">*tarato sulle soglie di S8–S10 · prima frazione sempre a 5:00–5:05 · zone riviste il 20/9 (fascia cardio)</div>
+    <div class="mdate" style="text-transform:none">Blocco 3: la Q del mercoledì si corre la mattina, niente intensità nei 2 giorni prima · se una frazione a 4:40 non tiene, la successiva parte a 4:45</div>
 
     <div class="zhead">Convenzioni delle sedute</div>
     <ul class="conv">
@@ -212,7 +284,8 @@
       <li><b>Facili e lunghi:</b> a digiuno, solo acqua. <b>Prima della Q:</b> eventuale mezza banana 1,5–2h prima. Niente miele.</li>
       <li><b>Facile = FC comanda.</b> Parti a 150–155 e lascia salire la deriva verso 160–165. Sopra 165 in un lento (caldo escluso): rallenta.</li>
       <li><b>Lungo:</b> nessun allungo; primi 10' ancora più lenti; finale moderato solo dove indicato.</li>
-      <li><b>Ginocchio:</b> Q solo se muto. Fastidio che cresce → stop. Persiste >10 giorni → fisio.</li>
+      <li><b>Brick post-classe:</b> finita la classe del venerdì, senza pausa, 3–4×1 km a 4:40–4:45, rec 2'. Le gambe cotte fanno da sled.</li>
+      <li><b>Gara, FC nelle corse:</b> 1–3 a 172–178 · 4–6 a 178–184 · 7–8 libero. Mai sopra 185 nella prima metà. I wall ball chiudono: lì si svuota tutto.</li>
       <li><b>Cadenza:</b> libera nei lenti (~163 è normale); sale da sola negli allunghi e in soglia.</li>
     </ul>
     <button class="close" id="zonesClose">Chiudi</button>
@@ -295,6 +368,76 @@ const DEFAULT_WORKOUTS = [
    detail:"CORSA: 45' continui facili.\nFC: tetto 160 (parti a 150-155).\nPASSO: ~5:50–6:20/km.\nALLUNGHI: 6 × 20\" rilassati, recupero camminando.\nNOTE: a digiuno. Cadenza libera."},
   {id:'s12-l', date:'2026-10-04', kind:'long', tag:'Lungo', title:"Lungo 80' (fin. moderato)", short:"Lungo 80' +mod.",
    detail:"CORSA: 65' facili (FC ≤155) + finale 15' MODERATI.\nMODERATO: FC 158–168 · ~5:30–5:45/km, controllato.\nDEFATICAMENTO: 3–5' di cammino.\nTOTALE: 80'.\nNOTE: a digiuno. Ultimo lungo del Blocco 2 — S13 e i brick arrivano con l'aggiornamento di ottobre."},
+  {id:'s13-q', date:'2026-10-07', kind:'race', tag:'Ritmo gara', title:"Ritmo gara 5×3'", short:"Gara 5×3'",
+   detail:"RISCALDAMENTO: 15' facili + 4 allunghi.\nLAVORO: 5 × 3' a ritmo gara — 4:40–4:45/km · FC 175–185.\nRECUPERO: 2' di trotto.\nDEFATICAMENTO: 10'.\nNOTE: ingresso nel Blocco 3 dopo la settimana carica. Frazioni corte apposta: impara il passo 4:40, non cercare di più. Tutte uguali."},
+  {id:'s13-e', date:'2026-10-08', kind:'easy', tag:'Facile', title:"Facile 40' + allunghi", short:"Facile 40' +all.",
+   detail:"40' facili, FC 140–160 (parti a 150–155). 6×20\" di allunghi rilassati a fine corsa."},
+  {id:'s13-l', date:'2026-10-11', kind:'long', tag:'Lungo', title:"Lungo 70'", short:"Lungo 70'",
+   detail:"Tutto facile, FC ≤160. Niente finale: questa settimana si recupera. A digiuno."},
+
+  {id:'s14-q', date:'2026-10-14', kind:'race', tag:'Progressivo', title:"Progressivo 7 km", short:"Progr. 7 km",
+   detail:"1 km a 6:05 (FC ~150), poi un km ciascuno a:\n5:25 (FC 158–163) · 5:15 (164–168) · 5:05 (169–173) · 4:55 (174–178) · 4:48 (177–181) · 4:42 (181–186).\nDEFATICAMENTO: 10'.\nNOTE: la corsa del tuo amico. Ogni km un gradino, nessuno strappo. Se al km 5 sei già a 183, il resto lo tieni e non acceleri oltre."},
+  {id:'s14-e', date:'2026-10-15', kind:'easy', tag:'Facile', title:"Facile 40' + allunghi", short:"Facile 40' +all.",
+   detail:"40' facili, FC ≤160. 6×20\" allunghi finali."},
+  {id:'s14-b', date:'2026-10-16', kind:'brick', tag:'Brick', title:"Brick post-classe 3×1 km", short:"Brick 3×1 km",
+   detail:"Subito dopo la classe Hyrox, senza doccia né pausa: fuori e 3 × 1 km a 4:40–4:45, recupero 2' di cammino/trotto. Defaticamento 5'.\nNOTE: il punto sono i primi 150 m di ogni km, con le gambe di legno. Se i primi 200 m sono 10\"/km più lenti del resto, è lì il lavoro. Niente eroismi: il quarto km non esiste."},
+  {id:'s14-l', date:'2026-10-18', kind:'long', tag:'Lungo', title:"Lungo 75' (fin. moderato)", short:"Lungo 75' +mod.",
+   detail:"65' facili (FC ≤160) + ultimi 10' moderati (FC 160–170, 5:30–5:45). Defat. 3–5' di cammino. A digiuno."},
+
+  {id:'s15-q', date:'2026-10-21', kind:'race', tag:'Ritmo gara', title:"Ritmo gara 6×1000", short:"Gara 6×1000",
+   detail:"RISCALDAMENTO: 15' + allunghi.\nLAVORO: 6 × 1000 m a 4:40 · FC 175–185.\nRECUPERO: 90\" di trotto.\nDEFATICAMENTO: 10'.\nNOTE: sei frazioni fotocopia. La prima a 4:42, non a 4:35. Se una non tiene, la successiva parte a 4:45."},
+  {id:'s15-e', date:'2026-10-22', kind:'easy', tag:'Facile', title:"Facile 45' + allunghi", short:"Facile 45' +all.",
+   detail:"45' facili, FC ≤160. 6×20\" allunghi finali."},
+  {id:'s15-b', date:'2026-10-23', kind:'brick', tag:'Brick', title:"Brick post-classe 4×1 km", short:"Brick 4×1 km",
+   detail:"Dopo la classe, senza pausa: 4 × 1 km a 4:40–4:45, rec 2'. Defat. 5'.\nNOTE: quarto km solo se i primi tre erano in controllo (FC sotto 186)."},
+  {id:'s15-l', date:'2026-10-25', kind:'long', tag:'Lungo', title:"Lungo 80' · test gel ½", short:"Lungo 80' · gel ½",
+   detail:"Tutto facile, FC ≤160.\nTEST GEL: mezzo gel 2:1 a 40' + 150–200 ml d'acqua subito dopo. Colazione normale 2h prima (niente miele).\nNOTE: se l'intestino protesta, la prossima prova si rimanda di due settimane."},
+
+  {id:'s16-e1', date:'2026-10-28', kind:'easy', tag:'Scarico', title:"Facile 35' + 4×2' gara", short:"Scarico 35' +4×2'",
+   detail:"SCARICO. 35' facili (FC ≤160), poi 4 × 2' a ritmo gara (4:40) con 2' di recupero. Richiamo leggero, non una seduta."},
+  {id:'s16-e2', date:'2026-10-29', kind:'easy', tag:'Scarico', title:"Facilissimi 30' (opz.)", short:"Opz. 30'",
+   detail:"Opzionale. 30' lentissimi o riposo. Se hai dubbi, riposo."},
+  {id:'s16-l', date:'2026-11-01', kind:'long', tag:'Scarico', title:"Lungo 60'", short:"Lungo 60'",
+   detail:"SCARICO. 60' tutto facile, FC ≤160. Nessun finale. Gambe leggere per S17."},
+
+  {id:'s17-q', date:'2026-11-04', kind:'race', tag:'Ritmo gara', title:"Ritmo gara 8×1000", short:"Gara 8×1000",
+   detail:"RISCALDAMENTO: 15' + allunghi.\nLAVORO: 8 × 1000 m a 4:40 · FC 175–185.\nRECUPERO: 90\" di trotto.\nDEFATICAMENTO: 10'.\nNOTE: le otto frazioni della gara, senza stazioni. La seduta chiave del blocco. Frazioni 1–3 a 4:42, 4–6 a 4:40, 7–8 come viene. Gel 20' prima solo se il test di S15 è andato bene."},
+  {id:'s17-e', date:'2026-11-05', kind:'easy', tag:'Facile', title:"Facile 40' + allunghi", short:"Facile 40' +all.",
+   detail:"40' facili, FC ≤160. 6×20\" allunghi. Rigenerante dopo le 8×1000."},
+  {id:'s17-b', date:'2026-11-06', kind:'brick', tag:'Brick', title:"Brick post-classe 4×1 km", short:"Brick 4×1 km",
+   detail:"Dopo la classe, senza pausa: 4 × 1 km a 4:40, rec 2'. Defat. 5'."},
+  {id:'s17-l', date:'2026-11-08', kind:'long', tag:'Lungo', title:"Lungo 85' · gel intero", short:"Lungo 85' · gel",
+   detail:"70' facili (FC ≤160) + finale 15' moderato (160–170, 5:30–5:45).\nTEST GEL: un gel intero a 40' + acqua. Il lungo più lungo del percorso."},
+
+  {id:'s18-q', date:'2026-11-11', kind:'race', tag:'VO2max', title:"VO2 5×3' a 4:20–4:25", short:"VO2 5×3'",
+   detail:"RISCALDAMENTO: 15' + allunghi.\nLAVORO: 5 × 3' a 4:20–4:25/km · FC 185–195.\nRECUPERO: 2'30\" di trotto.\nDEFATICAMENTO: 10'.\nNOTE: l'unica seduta sopra soglia del blocco. Serve a rendere il 4:40 'comodo'. Frazioni uguali, nessuno sprint finale."},
+  {id:'s18-e', date:'2026-11-12', kind:'easy', tag:'Facile', title:"Facile 40' + allunghi", short:"Facile 40' +all.",
+   detail:"40' facili, FC ≤160. 6×20\" allunghi."},
+  {id:'s18-b', date:'2026-11-13', kind:'brick', tag:'Brick', title:"Brick da parco 6 giri", short:"Brick parco ×6",
+   detail:"6 giri di: 20 m burpee broad jump (o 15 squat jump / 40 m affondi camminati) → SUBITO 800 m a 4:40 → 2' di recupero.\nRisc. 12' + allunghi, defat. 8'.\nNOTE: se la palestra si apre o tuo fratello è in Italia, questa è la seduta da fare con sled/SkiErg o in coppia."},
+  {id:'s18-l', date:'2026-11-15', kind:'long', tag:'Lungo', title:"Lungo 70' + 3×5' gara", short:"Lungo 70' +3×5'",
+   detail:"70' facili con dentro, dal 25' in poi, 3 × 5' a ritmo gara (4:40) con 3' facili tra uno e l'altro. Il resto a FC ≤160."},
+
+  {id:'s19-q', date:'2026-11-18', kind:'race', tag:'Simulazione', title:"Simulazione 8×1000 + stazioni", short:"Simulaz. 8×1000",
+   detail:"PROVA GENERALE. Risc. 15' + allunghi. Gel 20' prima.\n8 × [1000 m a 4:40 → 90\" di 'stazione' a corpo libero: a rotazione 15 burpee / 20 squat jump / 30 air squat / 20 affondi → subito la corsa successiva].\nDefat. 10'.\nNOTE: niente recupero tra stazione e corsa: è la transizione che alleni. Frazioni 1–3 FC 172–178, 4–6 178–184, 7–8 libero."},
+  {id:'s19-e', date:'2026-11-19', kind:'easy', tag:'Facile', title:"Facile 35' + allunghi", short:"Facile 35' +all.",
+   detail:"35' facili, FC ≤160. 6×20\" allunghi."},
+  {id:'s19-l', date:'2026-11-22', kind:'long', tag:'Lungo', title:"Lungo 60'", short:"Lungo 60'",
+   detail:"Ultimo lungo. 60' tutto facile, FC ≤160. Da qui inizia il taper."},
+
+  {id:'s20-q', date:'2026-11-25', kind:'race', tag:'Taper', title:"4×1000 a 4:40", short:"Taper 4×1000",
+   detail:"TAPER. Risc. 15' + allunghi. 4 × 1000 m a 4:40, rec 2' trotto. Defat. 10'.\nNOTE: il volume scende, l'intensità resta. Deve sembrare facile: è il segnale che il taper funziona."},
+  {id:'s20-e', date:'2026-11-26', kind:'easy', tag:'Taper', title:"Facile 30'", short:"Facile 30'",
+   detail:"30' facili, FC ≤160, niente allunghi."},
+  {id:'s20-l', date:'2026-11-29', kind:'long', tag:'Taper', title:"45' facile + 4×1' gara", short:"45' +4×1'",
+   detail:"45' facili (FC ≤160) con 4 × 1' a ritmo gara negli ultimi 15', recupero 2'. Gambe sveglie, non stanche."},
+
+  {id:'s21-q', date:'2026-12-02', kind:'race', tag:'Pre-gara', title:"25' + 3×2' gara", short:"25' +3×2'",
+   detail:"25' facili + 3 × 2' a ritmo gara (4:40), rec 2'. Defat. 5'.\nNOTE: ultima seduta con un filo di intensità. Corta e brillante."},
+  {id:'s21-e', date:'2026-12-04', kind:'easy', tag:'Pre-gara', title:"20' + 4 allunghi", short:"20' +4 all.",
+   detail:"20' facilissimi + 4 allunghi da 15\". Sciogliere, non allenare.\nNOTE: se la gara è domenica, sposta questa a sabato e riposa venerdì."},
+  {id:'gara', date:'2026-12-05', kind:'gara', tag:'Gara', title:"HYROX DOUBLE", short:"HYROX",
+   detail:"Giorno gara (sposta a domenica 6 se la vostra wave è di domenica).\nGel 15–20' prima del via (solo se testato). Colazione 2,5–3 h prima, niente miele.\nFC corse: 1–3 a 172–178 · 4–6 a 178–184 · 7–8 libero. Mai sopra 185 nella prima metà.\nRoxzone: attrezzi pronti, una parola per il cambio, niente pause acqua oltre 10\".\nI wall ball chiudono la gara: lì si svuota tutto."},
 ];
 
 /* ---------- Persistenza ---------- */
@@ -345,10 +488,42 @@ function chipHTML(w){
   const mkHTML = mk?`<span class="mk">${mk}</span>`:'';
   const label = view==='week'? w.title : w.short;
   return `<div class="chip kind-${w.kind}${st}" data-id="${w.id}">
-      <span class="tag">${w.tag}</span>${label}${mkHTML}</div>`;
+      <span class="tag">${w.tag}</span><span class="lbl">${label}</span>${mkHTML}</div>`;
+}
+
+function renderHero(){
+  const all=workouts();
+  const gara=all.find(w=>w.kind==='gara');
+  const days=gara?Math.round((parseYMD(gara.date)-parseYMD(todayYMD))/86400000):null;
+  const dl=document.getElementById('dLeft'), du=document.getElementById('dUnit');
+  if(days===null){dl.textContent='–';}
+  else if(days>0){dl.textContent=days; du.innerHTML=(days===1?'giorno':'giorni')+'<br>alla gara';}
+  else if(days===0){dl.textContent='GO'; du.innerHTML='oggi<br>si gareggia';}
+  else {dl.textContent='✓'; du.innerHTML='gara<br>completata';}
+  if(gara) document.getElementById('raceDate').textContent=new Intl.DateTimeFormat('it-IT',{day:'numeric',month:'short',year:'numeric'}).format(parseYMD(gara.date));
+  const plan=all.filter(w=>w.kind!=='gara');
+  const done=plan.filter(w=>w.status==='done').length, skip=plan.filter(w=>w.status==='skip').length;
+  const left=plan.length-done-skip;
+  document.getElementById('sDone').textContent=done;
+  document.getElementById('sSkip').textContent=skip;
+  document.getElementById('sLeft').textContent=left;
+  document.getElementById('sPct').textContent=(done+skip)?Math.round(done/(done+skip)*100)+'%':'–';
+  document.getElementById('pDone').style.width=(done/plan.length*100)+'%';
+  document.getElementById('pSkip').style.width=(skip/plan.length*100)+'%';
+  const nx=all.filter(w=>!w.status && w.date>=todayYMD).sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0)[0];
+  const card=document.getElementById('nextCard');
+  if(!nx){card.classList.add('empty'); return;}
+  card.classList.remove('empty'); card.dataset.id=nx.id;
+  card.style.setProperty('--c',KIND_COLORS[nx.kind]); card.style.setProperty('--cbg',KIND_BG[nx.kind]);
+  document.getElementById('nIco').textContent=KIND_ICO[nx.kind]||'›';
+  const dd=Math.round((parseYMD(nx.date)-parseYMD(todayYMD))/86400000);
+  document.getElementById('nLbl').textContent=dd===0?'Oggi':(dd===1?'Domani':'Prossimo · tra '+dd+' giorni');
+  document.getElementById('nTtl').textContent=nx.title;
+  document.getElementById('nWhen').textContent=nx.tag+' · '+new Intl.DateTimeFormat('it-IT',{weekday:'long',day:'numeric',month:'long'}).format(parseYMD(nx.date));
 }
 
 function render(){
+  renderHero();
   document.getElementById('segMonth').classList.toggle('on',view==='month');
   document.getElementById('segWeek').classList.toggle('on',view==='week');
   if(view==='month') renderMonth(); else renderWeek();
@@ -403,13 +578,15 @@ document.getElementById('next').onclick=()=>{ cursor = view==='month'? new Date(
 /* ---------- Dettaglio (bottom sheet) ---------- */
 let currentId=null;
 const backdrop=document.getElementById('backdrop');
-const KIND_COLORS={easy:'var(--easy)',long:'var(--long)',test:'var(--test)',vac:'var(--vac)'};
+const KIND_COLORS={easy:'#4c8dff',long:'#9a7bff',test:'#d6ff3d',vac:'#8a94a6',race:'#ff6a2b',brick:'#22d3c5',gara:'#d6ff3d'};
+const KIND_BG={easy:'rgba(76,141,255,.15)',long:'rgba(154,123,255,.16)',test:'rgba(214,255,61,.12)',vac:'rgba(138,148,166,.14)',race:'rgba(255,106,43,.16)',brick:'rgba(34,211,197,.14)',gara:'rgba(214,255,61,.16)'};
+const KIND_ICO={easy:'E',long:'L',test:'S',vac:'F',race:'G',brick:'B',gara:'★'};
 function fillSheet(id){
   const w=workouts().find(x=>x.id===id); if(!w) return;
   const tagEl=document.getElementById('mTag');
   tagEl.textContent=w.tag;
   tagEl.style.background = w.status==='done'?'var(--done)':(w.status==='skip'?'var(--skip)':KIND_COLORS[w.kind]);
-  tagEl.style.color = (w.kind==='test'&&!w.status)?'var(--brand-ink)':'#fff';
+  tagEl.style.color = '#0a0b0d';
   document.getElementById('mTitle').textContent=w.title;
   document.getElementById('mDate').textContent=fmtFull.format(parseYMD(w.date));
   document.getElementById('mDetail').textContent=w.detail;
@@ -425,6 +602,8 @@ document.getElementById('btnClear').onclick=()=>setStatus(currentId,null);
 document.getElementById('moveDate').onchange=e=>{ if(e.target.value) setDate(currentId,e.target.value); };
 document.getElementById('btnClose').onclick=closeDetail;
 backdrop.addEventListener('click',e=>{ if(e.target===backdrop) closeDetail(); });
+
+document.getElementById('nextCard').onclick=e=>{ const id=e.currentTarget.dataset.id; if(id) openDetail(id); };
 
 /* ---------- Scheda Zone & ritmi ---------- */
 const zb=document.getElementById('zonesBackdrop');
