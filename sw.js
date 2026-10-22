@@ -1,4 +1,4 @@
-const CACHE = 'hxrun-v7';
+const CACHE = 'hxrun-v9';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest',
   './icon-192.png', './icon-512.png', './apple-touch-icon.png'
