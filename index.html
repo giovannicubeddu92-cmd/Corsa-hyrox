@@ -282,8 +282,8 @@
       <li><b>Riscaldamento Q:</b> 12–15' facili + 4 allunghi da 20". <b>Defaticamento:</b> 10' facilissimi.</li>
       <li><b>Recupero tra ripetute:</b> trotto leggero, mai fermo — 90" per frazioni fino a 6', 2' da 8' in su.</li>
       <li><b>Facili e lunghi:</b> a digiuno, solo acqua. <b>Prima della Q:</b> eventuale mezza banana 1,5–2h prima. Niente miele.</li>
-      <li><b>Facile = FC comanda.</b> Parti a 150–155 e lascia salire la deriva verso 160–165. Sopra 165 in un lento (caldo escluso): rallenta.</li>
-      <li><b>Lungo:</b> nessun allungo; primi 10' ancora più lenti; finale moderato solo dove indicato.</li>
+      <li><b>Facile = FC comanda.</b> Parti a 150–155, tetto 160. <b>Passo nascosto</b> sull'orologio, <b>allarme FC a 160</b>. Al fresco il tuo facile è già ~5:50–6:00: corri mattina o sera.</li>
+      <li><b>Lungo a 3 blocchi:</b> tre parti uguali con tetto FC 155 → 160 → 165. Nessun allungo. Di mattina o sera, non a pranzo.</li>
       <li><b>Brick post-classe:</b> finita la classe del venerdì, senza pausa, 3–4×1 km a 4:40–4:45, rec 2'. Le gambe cotte fanno da sled.</li>
       <li><b>Gara, FC nelle corse:</b> 1–3 a 172–178 · 4–6 a 178–184 · 7–8 libero. Mai sopra 185 nella prima metà. I wall ball chiudono: lì si svuota tutto.</li>
       <li><b>Cadenza:</b> libera nei lenti (~163 è normale); sale da sola negli allunghi e in soglia.</li>
@@ -390,15 +390,15 @@ const DEFAULT_WORKOUTS = [
    detail:"45' facili, FC ≤160. 6×20\" allunghi finali."},
     {id:'s15-b', date:'2026-10-23', kind:'brick', tag:'Brick', title:"Classe senza brick", short:"No brick",
    detail:"MODIFICATO: dopo le 6×1000 di giovedì 22, venerdì solo classe Hyrox, niente brick. Due giorni di intensità di fila prima del lungo di domenica e del test dei 5 km di mercoledì sono troppi.\nIl primo brick vero slitta a venerdì 6 novembre.\nSegnalo come 'saltato' a fine giornata."},
-  {id:'s15-l', date:'2026-10-25', kind:'long', tag:'Lungo', title:"Lungo 80' · test gel ½", short:"Lungo 80' · gel ½",
-   detail:"DI MATTINA se possibile. Se le gambe sono ancora pesanti: 70' invece di 80'.\nTutto facile, FC ≤160.\nTEST GEL: mezzo gel 2:1 a 40' + 150–200 ml d'acqua subito dopo. Colazione normale 2h prima (niente miele).\nNOTE: se l'intestino protesta, la prossima prova si rimanda di due settimane."},
+  {id:'s15-l', st:'done', date:'2026-10-26', kind:'long', tag:'Lungo', title:"Lungo 70' · gel ½", short:"Lungo · gel ½",
+   detail:"FATTO lunedì 26 a pranzo: 11,8 km in 69', FC media 164 (troppo alta: solo 17% sotto 160).\nTEST GEL ½: superato, nessun fastidio.\nProssimo: gel intero domenica 8 novembre."},
 
-    {id:'s16-e1', date:'2026-10-28', kind:'test', tag:'Test', title:"TEST 5 km", short:"Test 5 km",
-   detail:"IL TEST. La mattina, al fresco, su percorso PIATTO e conosciuto (non in pineta).\nIl giorno prima: riposo. Colazione leggera 2h prima, niente miele.\nRISCALDAMENTO: 15' facili + 4 allunghi da 20\".\nTEST: km 1 a 4:30–4:35 (anche se sembra lento) · km 2–4 al passo che senti sostenibile · km 5 tutto.\nDEFATICAMENTO: 10'.\nPREVISIONE: 22:00–22:40 (più probabile ~22:15).\nNOTE: mandami il FIT. Dal risultato fisso il passo delle 8×1000 del 4 novembre."},
-  {id:'s16-e2', date:'2026-10-29', kind:'easy', tag:'Scarico', title:"Facilissimi 30' (opz.)", short:"Opz. 30'",
-   detail:"Opzionale. 30' lentissimi o riposo. Se hai dubbi, riposo."},
-  {id:'s16-l', date:'2026-11-01', kind:'long', tag:'Scarico', title:"Lungo 60'", short:"Lungo 60'",
-   detail:"SCARICO. 60' tutto facile, FC ≤160. Nessun finale. Gambe leggere per S17."},
+    {id:'s16-e1', date:'2026-10-29', kind:'test', tag:'Test', title:"TEST 5 km", short:"Test 5 km",
+   detail:"IL TEST. La mattina, al fresco, su percorso PIATTO e conosciuto (non in pineta).\nIl giorno prima (mer 28): riposo. Colazione leggera 2h prima, niente miele.\nRISCALDAMENTO: 15' facili + 4 allunghi da 20\".\nTEST: km 1 a 4:30–4:35 (anche se sembra lento) · km 2–4 al passo che senti sostenibile · km 5 tutto.\nDEFATICAMENTO: 10'.\nPREVISIONE: 22:00–22:40 (più probabile ~22:15).\nNOTE: mandami il FIT. Dal risultato fisso il passo delle 8×1000 del 4 novembre."},
+  {id:'s16-e2', date:'2026-10-28', kind:'vac', tag:'Riposo', title:"Riposo pre-test", short:"Riposo",
+   detail:"Riposo completo: domani c'è il test dei 5 km.\nCena normale e digeribile, a letto presto. Prepara scarpe e fascia cardio la sera."},
+  {id:'s16-l', date:'2026-11-01', kind:'long', tag:'Lungo', title:"Lungo 60' · 3 blocchi", short:"Lungo 60' ·3bl",
+   detail:"Lungo a TRE BLOCCHI (60'), ognuno un po' più svelto del precedente:\n• 20' con FC ≤155 (al fresco ~6:00/km)\n• 20' con FC ≤160 (~5:50/km)\n• 20' con FC ≤165 (~5:40/km)\nComanda la FC, non il passo: se la FC supera il tetto del blocco, rallenta.\nDi MATTINA o sera, non a pranzo al sole. Passo nascosto sull'orologio, allarme FC attivo.\nSettimana di scarico: se le gambe sono pesanti dopo il test, tutto nel primo blocco (FC ≤155)."},
 
   {id:'s17-q', date:'2026-11-04', kind:'race', tag:'Ritmo gara', title:"Ritmo gara 8×1000", short:"Gara 8×1000",
    detail:"RISCALDAMENTO: 15' + allunghi.\nLAVORO: 8 × 1000 m a 4:40 · FC 175–185.\nRECUPERO: 90\" di trotto.\nDEFATICAMENTO: 10'.\nNOTE: le otto frazioni della gara, senza stazioni. La seduta chiave del blocco. Frazioni 1–3 a 4:42, 4–6 a 4:40, 7–8 come viene. Gel 20' prima solo se il test di S15 è andato bene."},
@@ -406,8 +406,8 @@ const DEFAULT_WORKOUTS = [
    detail:"40' facili, FC ≤160. 6×20\" allunghi. Rigenerante dopo le 8×1000."},
   {id:'s17-b', date:'2026-11-06', kind:'brick', tag:'Brick', title:"Brick post-classe 4×1 km", short:"Brick 4×1 km",
    detail:"Dopo la classe, senza pausa: 4 × 1 km a 4:40, rec 2'. Defat. 5'."},
-  {id:'s17-l', date:'2026-11-08', kind:'long', tag:'Lungo', title:"Lungo 85' · gel intero", short:"Lungo 85' · gel",
-   detail:"70' facili (FC ≤160) + finale 15' moderato (160–170, 5:30–5:45).\nTEST GEL: un gel intero a 40' + acqua. Il lungo più lungo del percorso."},
+  {id:'s17-l', date:'2026-11-08', kind:'long', tag:'Lungo', title:"Lungo 85' · 3 blocchi · gel", short:"Lungo 85' · gel",
+   detail:"Lungo a TRE BLOCCHI (85'), ognuno un po' più svelto del precedente:\n• 30' con FC ≤155 (al fresco ~6:00/km)\n• 30' con FC ≤160 (~5:50/km)\n• 25' con FC ≤165 (~5:40/km)\nComanda la FC, non il passo: se la FC supera il tetto del blocco, rallenta.\nDi MATTINA o sera, non a pranzo al sole. Passo nascosto sull'orologio, allarme FC attivo.\nTEST GEL INTERO: un gel a 40' + 150–200 ml d'acqua. Se va bene, è il gel della gara.\nIl lungo più lungo del percorso."},
 
   {id:'s18-q', date:'2026-11-11', kind:'race', tag:'VO2max', title:"VO2 4×3' a 4:20–4:25", short:"VO2 4×3'",
    detail:"RISCALDAMENTO: 15' + allunghi.\nLAVORO: 4 × 3' a 4:20–4:25/km · FC 185–195.\nRECUPERO: 2'30\" di trotto.\nDEFATICAMENTO: 10'.\nNOTE: ridotto da 5 a 4 frazioni per arrivare fresco alla simulazione di sabato. Frazioni uguali, nessuna volata finale."},
@@ -424,8 +424,8 @@ const DEFAULT_WORKOUTS = [
    detail:"Quattro giorni dopo la simulazione: richiamo del ritmo, non una seduta dura.\nRISCALDAMENTO: 15' + allunghi.\nLAVORO: 5 × 1000 m a 4:40 · FC 175–185.\nRECUPERO: 2' di trotto.\nDEFATICAMENTO: 10'.\nNOTE: se le gambe sono ancora pesanti dalla simulazione, fai 4 × 1000."},
   {id:'s19-e', date:'2026-11-19', kind:'easy', tag:'Facile', title:"Facile 35' + allunghi", short:"Facile 35' +all.",
    detail:"35' facili, FC ≤160. 6×20\" allunghi."},
-  {id:'s19-l', date:'2026-11-22', kind:'long', tag:'Lungo', title:"Lungo 60'", short:"Lungo 60'",
-   detail:"Ultimo lungo. 60' tutto facile, FC ≤160. Da qui inizia il taper."},
+  {id:'s19-l', date:'2026-11-22', kind:'long', tag:'Lungo', title:"Lungo 60' · 3 blocchi", short:"Lungo 60' ·3bl",
+   detail:"Lungo a TRE BLOCCHI (60'), ognuno un po' più svelto del precedente:\n• 20' con FC ≤155 (al fresco ~6:00/km)\n• 20' con FC ≤160 (~5:50/km)\n• 20' con FC ≤165 (~5:40/km)\nComanda la FC, non il passo: se la FC supera il tetto del blocco, rallenta.\nDi MATTINA o sera, non a pranzo al sole. Passo nascosto sull'orologio, allarme FC attivo.\nUltimo lungo. Da qui inizia il taper."},
 
   {id:'s20-q', date:'2026-11-25', kind:'race', tag:'Taper', title:"4×1000 a 4:40", short:"Taper 4×1000",
    detail:"TAPER. Risc. 15' + allunghi. 4 × 1000 m a 4:40, rec 2' trotto. Defat. 10'.\nNOTE: il volume scende, l'intensità resta. Deve sembrare facile: è il segnale che il taper funziona."},
