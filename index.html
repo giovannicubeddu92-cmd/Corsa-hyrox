@@ -271,7 +271,7 @@
       <tr><td>Facile</td><td class="num">140–160<br><small>fino a 165 caldo/finale</small></td><td class="num">5:50–6:30</td><td>parti a 150–155, lascia salire la deriva</td></tr>
       <tr><td>Moderato</td><td class="num">160–170</td><td class="num">5:30–5:45</td><td>impegnato ma controllato</td></tr>
       <tr><td>Soglia</td><td class="num">172–182</td><td class="num">4:55–5:05*</td><td>"comodamente duro", frasi corte</td></tr>
-      <tr><td><b>Ritmo gara</b></td><td class="num">175–185</td><td class="num"><b>4:35–4:45</b></td><td>frazioni da 1 km, brick · riferimento 4:40</td></tr>
+      <tr><td><b>Ritmo gara</b></td><td class="num">175–185</td><td class="num"><b>4:35–4:45</b></td><td>allenamento 4:40 · in gara 4:45 di media (test 5 km: 22:25)</td></tr>
       <tr><td>VO2max</td><td class="num">185–195</td><td class="num">4:20–4:30</td><td>S18, frazioni corte</td></tr>
       <tr><td>Allunghi</td><td class="num">—</td><td>6×20" veloci, rilassati</td><td>rec. 60–90" camminando</td></tr>
     </table>
@@ -393,15 +393,15 @@ const DEFAULT_WORKOUTS = [
   {id:'s15-l', st:'done', date:'2026-10-26', kind:'long', tag:'Lungo', title:"Lungo 70' · gel ½", short:"Lungo · gel ½",
    detail:"FATTO lunedì 26 a pranzo: 11,8 km in 69', FC media 164 (troppo alta: solo 17% sotto 160).\nTEST GEL ½: superato, nessun fastidio.\nProssimo: gel intero domenica 8 novembre."},
 
-    {id:'s16-e1', date:'2026-10-29', kind:'test', tag:'Test', title:"TEST 5 km", short:"Test 5 km",
-   detail:"IL TEST. La mattina, al fresco, su percorso PIATTO e conosciuto (non in pineta).\nIl giorno prima (mer 28): riposo. Colazione leggera 2h prima, niente miele.\nRISCALDAMENTO: 15' facili + 4 allunghi da 20\".\nTEST: km 1 a 4:30–4:35 (anche se sembra lento) · km 2–4 al passo che senti sostenibile · km 5 tutto.\nDEFATICAMENTO: 10'.\nPREVISIONE: 22:00–22:40 (più probabile ~22:15).\nNOTE: mandami il FIT. Dal risultato fisso il passo delle 8×1000 del 4 novembre."},
+    {id:'s16-e1', st:'done', date:'2026-10-29', kind:'test', tag:'Test', title:"TEST 5 km · 22:25", short:"Test 5 km ✓",
+   detail:"FATTO giovedì 29 alle 6:30, a digiuno.\nRISULTATO: 22:25 di tempo in movimento (4:29/km) · FC media 185, max 194.\nSplit: 4:37 · 4:25 · 4:26 · 4:25 · 4:30.\nPAUSA: a 3,18 km orologio fermo 71\" (non 10\"): FC scesa da 193 a 154. Gli ultimi 1,8 km sono stati corsi con un recupero vero.\nSTIMA SENZA PAUSA: 22:30–22:45. Previsione era 22:00–22:40: dentro, nella metà lenta.\nCONSEGUENZE: 4:40 resta il passo delle frazioni da 1000 (è circa la tua soglia). In gara il riferimento diventa 4:45 di media."},
   {id:'s16-e2', date:'2026-10-28', kind:'vac', tag:'Riposo', title:"Riposo pre-test", short:"Riposo",
    detail:"Riposo completo: domani c'è il test dei 5 km.\nCena normale e digeribile, a letto presto. Prepara scarpe e fascia cardio la sera."},
   {id:'s16-l', date:'2026-11-01', kind:'long', tag:'Lungo', title:"Lungo 60' · 3 blocchi", short:"Lungo 60' ·3bl",
    detail:"Lungo a TRE BLOCCHI (60'), ognuno un po' più svelto del precedente:\n• 20' con FC ≤155 (al fresco ~6:00/km)\n• 20' con FC ≤160 (~5:50/km)\n• 20' con FC ≤165 (~5:40/km)\nComanda la FC, non il passo: se la FC supera il tetto del blocco, rallenta.\nDi MATTINA o sera, non a pranzo al sole. Passo nascosto sull'orologio, allarme FC attivo.\nSettimana di scarico: se le gambe sono pesanti dopo il test, tutto nel primo blocco (FC ≤155)."},
 
   {id:'s17-q', date:'2026-11-04', kind:'race', tag:'Ritmo gara', title:"Ritmo gara 8×1000", short:"Gara 8×1000",
-   detail:"RISCALDAMENTO: 15' + allunghi.\nLAVORO: 8 × 1000 m a 4:40 · FC 175–185.\nRECUPERO: 90\" di trotto.\nDEFATICAMENTO: 10'.\nNOTE: le otto frazioni della gara, senza stazioni. La seduta chiave del blocco. Frazioni 1–3 a 4:42, 4–6 a 4:40, 7–8 come viene. Gel 20' prima solo se il test di S15 è andato bene."},
+   detail:"RISCALDAMENTO: 15' + 4 allunghi.\nLAVORO: 8 × 1000 m · FC 175–185.\n• frazioni 1–3 a 4:45\n• frazioni 4–8 a 4:40\nRECUPERO: 90\" di trotto.\nDEFATICAMENTO: 10'.\nREGOLA: se la FC passa 186 prima della 6ª frazione, le restanti a 4:45. Non si sfonda per salvare il numero.\nINTESTINO: la sera prima cena con poche fibre; la mattina sveglia 45–60' prima, caffè o acqua calda e bagno prima di uscire.\nNOTE: le otto frazioni della gara, senza stazioni. La seduta chiave del blocco. La mattina, al fresco."},
   {id:'s17-e', date:'2026-11-05', kind:'easy', tag:'Facile', title:"Facile 40' + allunghi", short:"Facile 40' +all.",
    detail:"40' facili, FC ≤160. 6×20\" allunghi. Rigenerante dopo le 8×1000."},
   {id:'s17-b', date:'2026-11-06', kind:'brick', tag:'Brick', title:"Brick post-classe 4×1 km", short:"Brick 4×1 km",
